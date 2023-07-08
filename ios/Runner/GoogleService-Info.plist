@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>988093995191-t2d02kpirfavq1hcgerdnsttmi5cfdu1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.988093995191-t2d02kpirfavq1hcgerdnsttmi5cfdu1</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDMyY3ORGKa-zTQPKBBc1hZj711egG1-0w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>988093995191</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.sistemPelaporan</string>
+	<key>PROJECT_ID</key>
+	<string>sistem-pelaporan-8e835</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sistem-pelaporan-8e835.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:988093995191:ios:1bd0e683b52676790c9532</string>
+</dict>
+</plist>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "988093995191",
+    "project_id": "sistem-pelaporan-8e835",
+    "storage_bucket": "sistem-pelaporan-8e835.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988093995191:android:157850d98ed238dc0c9532",
+        "android_client_info": {
+          "package_name": "com.example.sistem_pelaporan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988093995191-ioqdujppcgp9qr5sa5s5hdq9ncpf85tq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnAfElBt_3xVHMvWW9gyFndQduH2ijPUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988093995191-ioqdujppcgp9qr5sa5s5hdq9ncpf85tq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
