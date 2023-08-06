@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
+import 'package:sistem_pelaporan/values/output_utils.dart';
 
 class FirebaseServices {
   final _db = FirebaseFirestore.instance;
@@ -65,12 +66,10 @@ class FirebaseServices {
   Future<void> updateDataSpecifictDoc(String collection, String doc, data) async =>
       _db.collection(collection).doc(doc).update(data);
 
-  void updateDataCollectionByQuery(String collection, String query, dynamic value) {
-    _db
-        .collection(collection)
-        .where(query, isEqualTo: value)
-        .get()
-        .then((res) => res.docs[0].data().update(query, value));
+  Future<void> updateDataCollectionByQuery(String collection, String query, dynamic value) async {
+    final res = await _db.collection(collection).where(query, isEqualTo: value).get();
+    logO("res", m: res.size);
+    await res.docs[0].data().update(query, value);
   }
 
   void updateDataCollectionByTwoQuery(

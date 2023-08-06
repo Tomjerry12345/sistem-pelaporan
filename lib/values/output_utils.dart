@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/values/font_custom.dart';
-import 'package:sistem_pelaporan/values/widget_utils.dart';
+import 'package:sistem_pelaporan/values/position_utils.dart';
 
 import 'global_utils.dart';
 

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sistem_pelaporan/screens/admin/admin_screen.dart';
 import 'package:sistem_pelaporan/screens/autentikasi/login/login_screen.dart';
-import 'package:sistem_pelaporan/screens/pelapor/pelapor_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';

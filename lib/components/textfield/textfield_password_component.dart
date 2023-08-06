@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class TextfieldPasswordComponent extends StatefulWidget {
   final String hintText;
+  final String label;
   final Function(String)? onChanged;
   final TextEditingController? controller;
 
   const TextfieldPasswordComponent(
-      {super.key, this.hintText = "", this.onChanged, this.controller});
+      {super.key, this.hintText = "", this.onChanged, this.controller, this.label = ""});
 
   @override
   State<TextfieldPasswordComponent> createState() => _TextfieldPasswordComponentState();
@@ -44,6 +45,7 @@ class _TextfieldPasswordComponentState extends State<TextfieldPasswordComponent>
           filled: true,
           hintStyle: TextStyle(color: Colors.grey[800]),
           hintText: widget.hintText,
+          label: Text(widget.label),
           fillColor: Colors.white70),
     );
   }

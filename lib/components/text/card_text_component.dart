@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/values/font_custom.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
-import 'package:sistem_pelaporan/values/widget_utils.dart';
+import 'package:sistem_pelaporan/values/position_utils.dart';
 import 'text_component.dart';
 
 class CardTextComponent extends StatelessWidget {

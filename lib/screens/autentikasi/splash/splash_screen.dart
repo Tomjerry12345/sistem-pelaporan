@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/screens/autentikasi/login/login_screen.dart';
@@ -7,7 +6,7 @@ import 'package:sistem_pelaporan/screens/autentikasi/register/register_screen.da
 import 'package:sistem_pelaporan/values/font_custom.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
-import 'package:sistem_pelaporan/values/widget_utils.dart';
+import 'package:sistem_pelaporan/values/position_utils.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

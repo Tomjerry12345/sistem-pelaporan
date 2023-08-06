@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/components/textfield/textfield_component.dart';
+import 'package:sistem_pelaporan/components/textfield/textfield_password_component.dart';
 import 'package:sistem_pelaporan/screens/autentikasi/register/register_screen.dart';
 import 'package:sistem_pelaporan/values/font_custom.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
-import 'package:sistem_pelaporan/values/widget_utils.dart';
+import 'package:sistem_pelaporan/values/position_utils.dart';
 
 import 'logic.dart';
 
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: l.nik,
               ),
               V(24),
-              TextfieldComponent(
+              TextfieldPasswordComponent(
                 label: "Password",
                 controller: l.password,
               ),

@@ -4,16 +4,16 @@ import 'global_utils.dart';
 
 navigatePush(page, {isRemove = false}) {
   if (isRemove) {
-    Navigator.pushAndRemoveUntil(
+    return Navigator.pushAndRemoveUntil(
         ctx, MaterialPageRoute(builder: (context) => page), (Route route) => false);
   } else {
-    Navigator.push(
+    return Navigator.push(
       ctx,
       MaterialPageRoute(builder: (context) => page),
     );
   }
 }
 
-navigatePop() {
-  Navigator.pop(ctx);
+navigatePop({data}) {
+  Navigator.pop(ctx, data);
 }

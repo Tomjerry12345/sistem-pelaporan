@@ -39,6 +39,7 @@ class Logic {
       }
     } catch (e) {
       showToast(e);
+      closeDialog();
     }
   }
 }

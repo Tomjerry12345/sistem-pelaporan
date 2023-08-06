@@ -7,7 +7,7 @@ class ButtonElevatedComponent extends StatelessWidget {
   final Color fg;
   final double? w;
   final double? h;
-  final Color cb;
+  final Color? cb;
   const ButtonElevatedComponent(this.title,
       {super.key,
       required this.onPressed,
@@ -15,7 +15,7 @@ class ButtonElevatedComponent extends StatelessWidget {
       this.fg = Colors.white,
       this.w,
       this.h,
-      this.cb = Colors.black});
+      this.cb});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class ButtonElevatedComponent extends StatelessWidget {
           minimumSize: const Size(120, 40),
           shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              side: BorderSide(color: cb, width: 1)),
+              side: BorderSide(color: cb ?? bg, width: 1)),
         ),
         onPressed: onPressed,
         child: Text(title),

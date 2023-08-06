@@ -1,5 +1,9 @@
 import 'dart:math' as math;
 
+import 'package:latlong2/latlong.dart';
+
+import 'output_utils.dart';
+
 double getDistance(double lat1, double lon1, double lat2, double lon2) {
   // Mengkonversi derajat ke radian
   double degToRad = math.pi / 180.0;
@@ -77,4 +81,19 @@ List<dynamic> algorithmGreedy(listJalur) {
   }
 
   return visited;
+}
+
+double getTotalDistanceListRoute(listRoute) {
+  logO("listRoute", m: listRoute);
+
+  double totalDistance = 0.0;
+  for (int i = 0; i < listRoute.length - 1; i++) {
+    final lat1 = listRoute[i]["latitude"];
+    final long1 = listRoute[i]["longitude"];
+    final lat2 = listRoute[i + 1]["latitude"];
+    final long2 = listRoute[i + 1]["longitude"];
+    totalDistance += getDistance(lat1, long1, lat2, long2);
+  }
+
+  return totalDistance;
 }
