@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/algorithm_greedy.dart';
 import 'package:sistem_pelaporan/values/constant.dart';
 import "package:http/http.dart" as http;
+import 'package:sistem_pelaporan/values/position_utils.dart';
 
 import '../../../values/output_utils.dart';
 
@@ -110,13 +112,6 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
           "lokasi": LatLng(position.latitude, position.longitude),
           "jarak": 0.0
         },
-        {
-          "nama": "admin",
-          "jenis_laporan": "",
-          "tanggal": "",
-          "lokasi": LatLng(position.latitude, position.longitude),
-          "jarak": 0.0
-        }
       ];
 
       for (var userData in listUserLoc) {
@@ -150,8 +145,6 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
           "jarak": jarak
         });
       }
-
-      logO("listDatauser", m: listDatauser);
 
       setState(() {
         // listRoute = a;
@@ -226,7 +219,9 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                       child: ListView.builder(
                         itemBuilder: (ctx, i) {
                           final value = userData![i];
-                          if (i > -1) {
+
+                          final jarak = value["jarak"] as double;
+                          if (i > 0) {
                             return Card(
                               color: Colors.white,
                               child: InkWell(
@@ -234,8 +229,15 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                                 child: ListTile(
                                   leading: CircleAvatar(child: Text("A")),
                                   title: Text(value["nama"]),
-                                  subtitle: Text(value["jenis_laporan"]),
-                                  trailing: Icon(Icons.arrow_right),
+                                  subtitle: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(value["jenis_laporan"]),
+                                        V(8),
+                                        TextComponent("${jarak.toStringAsFixed(2)} km", size: 16),
+                                      ]),
+                                  // trailing: Icon(Icons.arrow_right),
                                 ),
                               ),
                             );

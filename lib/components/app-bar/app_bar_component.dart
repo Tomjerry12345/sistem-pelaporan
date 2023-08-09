@@ -16,7 +16,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
       {super.key,
       this.title = "",
       this.icLeft = Icons.sort,
-      this.icRight = Icons.account_circle_rounded,
+      this.icRight = Icons.logout,
       this.leftOnPressed,
       this.rightOnPressed,
       this.tab,
@@ -67,7 +67,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       toolbarHeight: 150,
       backgroundColor: bg,
-      leading: leftIcon(),
+      // leading: leftIcon(),
       actions: [rightIcon()],
       bottom: (tab != null && tab!.isNotEmpty)
           ? TabBar(
