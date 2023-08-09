@@ -109,6 +109,13 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
           "tanggal": "",
           "lokasi": LatLng(position.latitude, position.longitude),
           "jarak": 0.0
+        },
+        {
+          "nama": "admin",
+          "jenis_laporan": "",
+          "tanggal": "",
+          "lokasi": LatLng(position.latitude, position.longitude),
+          "jarak": 0.0
         }
       ];
 
@@ -213,13 +220,30 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                     ],
                   ),
                   Align(
-                    alignment: Alignment.bottomCenter,
+                    alignment: Alignment.bottomLeft,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      margin: const EdgeInsets.only(bottom: 20),
-                      decoration: BoxDecoration(
-                          color: Colors.white, borderRadius: BorderRadius.circular(40)),
-                      child: Text(_message),
+                      height: userData != null ? (userData!.length * 40) + (padding * 2) : 0,
+                      child: ListView.builder(
+                        itemBuilder: (ctx, i) {
+                          final value = userData![i];
+                          if (i > -1) {
+                            return Card(
+                              color: Colors.white,
+                              child: InkWell(
+                                onTap: () {},
+                                child: ListTile(
+                                  leading: CircleAvatar(child: Text("A")),
+                                  title: Text(value["nama"]),
+                                  subtitle: Text(value["jenis_laporan"]),
+                                  trailing: Icon(Icons.arrow_right),
+                                ),
+                              ),
+                            );
+                          }
+                          return Container();
+                        },
+                        itemCount: userData?.length,
+                      ),
                     ),
                   )
                 ],
