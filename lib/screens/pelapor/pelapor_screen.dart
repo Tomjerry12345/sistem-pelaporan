@@ -16,8 +16,11 @@ class _PelaporScreenState extends State<PelaporScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:
-            AppBarComponent(title: "", rightOnPressed: navigatePush(LoginScreen(), isRemove: true)),
+        appBar: AppBarComponent(
+            title: "",
+            rightOnPressed: () {
+              navigatePush(LoginScreen(), isRemove: true);
+            }),
         body: DashboardScreen());
   }
 }

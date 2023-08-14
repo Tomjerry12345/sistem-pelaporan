@@ -7,11 +7,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
-import 'package:sistem_pelaporan/values/algorithm_greedy.dart';
 import 'package:sistem_pelaporan/values/constant.dart';
 import "package:http/http.dart" as http;
 import 'package:sistem_pelaporan/values/position_utils.dart';
 
+import '../../../values/algorith_dijkstra.dart';
 import '../../../values/output_utils.dart';
 
 class LokasiTerdekatScreen extends StatefulWidget {
@@ -22,10 +22,6 @@ class LokasiTerdekatScreen extends StatefulWidget {
 }
 
 class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
-  String _message = 'Finding route...';
-  final double _defaultStrokeWidth = 3.0;
-  final Color _defaultColor = Colors.blue;
-
   LocationSettings locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.high,
     distanceFilter: 100,
@@ -102,8 +98,6 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
     try {
       final listUserLoc = await fs.getDataCollection("laporan");
 
-      logO("length", m: listUserLoc.length);
-
       final List<Map<String, dynamic>> listDatauser = [
         {
           "nama": "admin",
@@ -119,8 +113,8 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
         var targetLongitude = userData["lokasi"]["longitude"];
 
         var url =
-            "https://api.tomtom.com/routing/1/calculateRoute/${position.latitude},${position.longitude}:$targetLatitude,$targetLongitude/json?key=$apiKey&maxAlternatives=5";
-        logO("url", m: url);
+            "https://api.tomtom.com/routing/1/calculateRoute/${position.latitude},${position.longitude}:$targetLatitude,$targetLongitude/json?key=$apiKey&maxAlternatives=0";
+
         var result = await http.get(Uri.parse(url));
         var res = json.decode(result.body)['routes'];
 
@@ -131,23 +125,18 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
           routes.add(points);
         }
 
-        logO("routes", m: routes);
-
-        var a = algorithmGreedy(routes);
-
-        final jarak = getTotalDistanceListRoute(a);
+        var distance = algorithmDijkstra(routes);
 
         listDatauser.add({
           "nama": userData["nama"],
           "jenis_laporan": userData["jenis_laporan"],
           "tanggal": userData["tanggal"],
           "lokasi": LatLng(targetLatitude, targetLongitude),
-          "jarak": jarak
+          "jarak": distance
         });
       }
 
       setState(() {
-        // listRoute = a;
         userData = listDatauser;
       });
     } catch (e) {
@@ -250,14 +239,8 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                   )
                 ],
               )
-            : Center(
+            : const Center(
                 child: CircularProgressIndicator(),
               ));
-  }
-
-  void _updateMessage(bool isRouteAvailable) {
-    setState(() {
-      _message = isRouteAvailable ? 'Found route' : 'No route found';
-    });
   }
 }

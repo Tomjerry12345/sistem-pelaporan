@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sistem_pelaporan/screens/autentikasi/login/login_screen.dart';
@@ -10,7 +12,15 @@ class Logic {
   final nik = TextEditingController();
   final password = TextEditingController();
 
+  File? getImage;
+
   final fs = FirebaseServices();
+
+  void onPickImage(image, setState) {
+    setState(() {
+      getImage = image;
+    });
+  }
 
   Future<void> onRegister() async {
     showLoaderDialog();
@@ -19,15 +29,25 @@ class Logic {
     String txtPassword = password.text;
 
     try {
+      if (txtNik.length != 16) {
+        throw ArgumentError("Nik harus memiliki 16 nomor");
+      }
       final res = await fs.getDataCollectionByQuery("user", "nik", txtNik);
 
       if (res.isNotEmpty) {
-        showToast("Nik telah terdaftar");
-        closeDialog();
-        return;
+        throw ArgumentError("Nik telah terdaftar");
       }
-      await fs.addDataCollection(
-          "user", {"nama": txtNama, "nik": txtNik, "password": txtPassword, "type": "user"});
+
+      if (getImage == null) throw ArgumentError("image belum di pilih");
+      final urlFile = await fs.uploadFile(getImage!, "profile");
+
+      await fs.addDataCollection("user", {
+        "image": urlFile,
+        "nama": txtNama,
+        "nik": txtNik,
+        "password": txtPassword,
+        "type": "user"
+      });
 
       closeDialog();
 

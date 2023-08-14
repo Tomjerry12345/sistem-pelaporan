@@ -1,19 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
-import 'package:sistem_pelaporan/components/pick_maps/pick_maps.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/components/textfield/textfield_component.dart';
 import 'package:sistem_pelaporan/models/item_menu_dialog.dart';
-import 'package:sistem_pelaporan/services/firebase_services.dart';
-import 'package:sistem_pelaporan/values/date_utils.dart';
 import 'package:sistem_pelaporan/values/dialog_utils.dart';
-import 'package:sistem_pelaporan/values/navigate_utils.dart';
-import 'package:sistem_pelaporan/values/output_utils.dart';
 import 'package:sistem_pelaporan/values/pick_file_utils.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
 import 'package:sistem_pelaporan/values/position_utils.dart';
+
+import 'logic.dart';
 
 class TambahLaporanScreen extends StatefulWidget {
   const TambahLaporanScreen({super.key});
@@ -23,17 +18,7 @@ class TambahLaporanScreen extends StatefulWidget {
 }
 
 class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
-  final fs = FirebaseServices();
-
-  TextEditingController namaPelapor = TextEditingController();
-  TextEditingController jenisLaporan = TextEditingController();
-  TextEditingController deskripsi = TextEditingController();
-  TextEditingController noTelepon = TextEditingController();
-
-  File? file;
-  String typeFile = "";
-  Map location = {};
-
+  final l = Logic();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,31 +35,31 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 V(48),
                 TextfieldComponent(
                   label: "Nama pelapor",
-                  controller: namaPelapor,
+                  controller: l.namaPelapor,
                 ),
                 V(16),
                 TextfieldComponent(
                   label: "Jenis laporan",
-                  controller: jenisLaporan,
+                  controller: l.jenisLaporan,
                 ),
                 V(16),
                 TextfieldComponent(
                   label: "Deskripsi",
-                  controller: deskripsi,
+                  controller: l.deskripsi,
                 ),
                 V(16),
                 TextfieldComponent(
                   label: "No telepon",
-                  controller: noTelepon,
+                  controller: l.noTelepon,
                 ),
                 V(32),
                 Center(
-                  child: file != null
+                  child: l.file != null
                       ? Wrap(
                           direction: Axis.vertical,
                           children: [
                             TextComponent(
-                              getNameFile(file!),
+                              getNameFile(l.file!),
                               size: 14,
                             ),
                             V(8),
@@ -91,21 +76,13 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                           widget: menuDialog(context, [
                             ItemMenuDialog(
                                 title: "Pilih image",
-                                onPressed: () async {
-                                  final p = await pickImage();
-                                  setState(() {
-                                    file = p;
-                                    typeFile = "image";
-                                  });
+                                onPressed: () {
+                                  l.onPickFile("image", setState);
                                 }),
                             ItemMenuDialog(
                                 title: "Pilih video",
                                 onPressed: () async {
-                                  final p = await pickVideo();
-                                  setState(() {
-                                    file = p;
-                                    typeFile = "video";
-                                  });
+                                  l.onPickFile("video", setState);
                                 })
                           ]));
                     },
@@ -115,14 +92,14 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 ),
                 V(16),
                 Center(
-                  child: location.isNotEmpty
+                  child: l.location.isNotEmpty
                       ? Wrap(
                           direction: Axis.vertical,
                           children: [
                             Container(
                               width: 200,
                               child: TextComponent(
-                                "$location",
+                                "${l.location}",
                                 size: 14,
                               ),
                             ),
@@ -135,13 +112,7 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                   child: ButtonElevatedComponent(
                     "Pilih lokasi pelaporan",
                     onPressed: () async {
-                      final result = await navigatePush(PickMapsComponent());
-                      setState(() {
-                        location = {
-                          "latitude": result.latitude,
-                          "longitude": result.longitude,
-                        };
-                      });
+                      l.onPickMaps(setState);
                     },
                     bg: Colors.red,
                     w: 0.6.w,
@@ -150,50 +121,7 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 V(48),
                 Center(
                   child: ButtonElevatedComponent("Kirim laporan", onPressed: () async {
-                    showLoaderDialog();
-                    final txtNamaPelapor = namaPelapor.text;
-                    final txtJenisLaporan = jenisLaporan.text;
-                    final txtDeskripsi = deskripsi.text;
-                    final txtNoTelepon = noTelepon.text;
-
-                    // final file = image ?? video;
-
-                    if (txtNamaPelapor != "" &&
-                        txtJenisLaporan != "" &&
-                        txtDeskripsi != "" &&
-                        txtNoTelepon != "" &&
-                        file != null &&
-                        location.isNotEmpty) {
-                      try {
-                        if (file == null) throw ArgumentError("file belum di pilih");
-                        final urlFile = await fs.uploadFile(file!, "laporan");
-                        final date = formatDate(getTimeNow());
-                        final req = {
-                          "nama": txtNamaPelapor,
-                          "jenis_laporan": txtJenisLaporan,
-                          "deskripsi": txtDeskripsi,
-                          "no_telepon": txtNoTelepon,
-                          "file": urlFile,
-                          "type": "masuk",
-                          "lokasi": location,
-                          "type_file": typeFile,
-                          "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}"
-                        };
-
-                        fs.addDataCollection("laporan", req);
-
-                        closeDialog();
-
-                        navigatePop();
-                      } catch (e) {
-                        closeDialog();
-                        logO("error tambah laporan", m: e);
-                        showToast(e);
-                      }
-                    } else {
-                      closeDialog();
-                      showToast("Inputan tidak boleh kosong!");
-                    }
+                    l.onAdd();
                   }, w: 1.0.w),
                 ),
               ],

@@ -42,10 +42,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 V(48),
                 Center(
                     child: AvatarComponent(
-                  "",
+                  "https://www.seekpng.com/png/detail/17-176376_person-free-download-and-person-icon-png.png",
                   icon: Icons.camera,
                   colorIconBg: Colors.grey,
-                  onGetImage: (file) {},
+                  onGetImage: (image) {
+                    l.onPickImage(image, setState);
+                  },
                 )),
                 V(16),
                 TextfieldComponent(
@@ -56,6 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextfieldComponent(
                   label: "NIK",
                   controller: l.nik,
+                  inputType: TextInputType.number,
                 ),
                 V(24),
                 TextfieldComponent(

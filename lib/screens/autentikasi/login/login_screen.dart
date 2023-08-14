@@ -39,10 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const TextComponent("Silahkan login terlebih dahulu untuk melanjutkan",
                   size: 16, weight: FW.light),
               V(48),
-              TextfieldComponent(
-                label: "NIK",
-                controller: l.nik,
-              ),
+              TextfieldComponent(label: "NIK", controller: l.nik, inputType: TextInputType.number),
               V(24),
               TextfieldPasswordComponent(
                 label: "Password",

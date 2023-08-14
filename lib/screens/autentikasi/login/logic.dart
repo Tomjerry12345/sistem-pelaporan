@@ -18,6 +18,10 @@ class Logic {
     String txtPassword = password.text;
 
     try {
+      if (txtNik.length != 16) {
+        throw ArgumentError("Nik harus memiliki 16 nomor");
+      }
+
       final res = await fs.getDataCollectionByQuery("user", "nik", txtNik);
 
       if (res.isNotEmpty) {
