@@ -55,19 +55,21 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 ),
                 V(32),
                 Center(
-                  child: l.file != null
-                      ? Wrap(
-                          direction: Axis.vertical,
-                          children: [
-                            TextComponent(
-                              getNameFile(l.file!),
-                              size: 14,
-                            ),
-                            V(8),
-                          ],
-                        )
-                      : Container(),
+                  child: l.loadingImage
+                      ? CircularProgressIndicator()
+                      : l.file != null
+                          ? Wrap(
+                              direction: Axis.vertical,
+                              children: [
+                                TextComponent(
+                                  getNameFile(l.file!),
+                                  size: 14,
+                                ),
+                              ],
+                            )
+                          : Container(),
                 ),
+                V(24),
                 Center(
                   child: ButtonElevatedComponent(
                     "Foto / Bukti video",

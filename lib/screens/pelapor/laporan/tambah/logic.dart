@@ -19,22 +19,36 @@ class Logic {
   File? file;
   String typeFile = "";
   Map location = {};
+  bool loadingImage = false;
 
   Future<void> onPickFile(key, setState) async {
-    File? p;
-    String? typeFile;
-    if (key == "image") {
-      p = await pickImage();
-      typeFile = "image";
-    } else {
-      p = await pickVideo();
-      typeFile = "video";
-    }
+    try {
+      setState(() {
+        loadingImage = true;
+      });
+      File? p;
+      String typeFile;
+      if (key == "image") {
+        p = await pickImage();
+        typeFile = "image";
+      } else {
+        p = await pickVideo();
+        typeFile = "video";
+      }
 
-    setState(() {
-      file = p;
-      typeFile = typeFile;
-    });
+      logO("typeFile");
+
+      setState(() {
+        loadingImage = false;
+        file = p;
+        this.typeFile = typeFile;
+      });
+    } catch (e) {
+      setState(() {
+        loadingImage = false;
+      });
+      showToast(e);
+    }
   }
 
   // Future<void> onPickMaps(setState) async {
