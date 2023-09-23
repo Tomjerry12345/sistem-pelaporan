@@ -8,11 +8,14 @@ import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
 import 'package:sistem_pelaporan/values/position_utils.dart';
 
+import 'logic.dart';
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l = Logic();
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.all(16),

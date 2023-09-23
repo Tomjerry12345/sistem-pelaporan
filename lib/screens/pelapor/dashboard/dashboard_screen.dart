@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
-import 'package:sistem_pelaporan/screens/pelapor/laporan/tambah/tambah_laporan_screen.dart';
-import 'package:sistem_pelaporan/screens/pelapor/titik_rawan/titik_rawan_screen.dart';
 import 'package:sistem_pelaporan/values/font_custom.dart';
-import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
 import 'package:sistem_pelaporan/values/position_utils.dart';
+
+import 'logic.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -16,6 +15,14 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  final l = Logic();
+
+  @override
+  initState() {
+    super.initState();
+    l.onGet(setState);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextComponent(
-              "hallo syahrul",
+              "hallo ${l.nama}",
               size: 18,
               weight: FW.light,
             ),
@@ -40,7 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ButtonElevatedComponent(
                   "Laporkan masalah anda",
                   onPressed: () {
-                    navigatePush(TambahLaporanScreen());
+                    l.onMoveLaporan();
                   },
                   w: 0.6.w,
                 ),
@@ -48,7 +55,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ButtonElevatedComponent(
                   "Lokasi Rawan Kriminal",
                   onPressed: () {
-                    navigatePush(TitikRawanScreen());
+                    l.onMoveTitikRawan();
                   },
                   w: 0.6.w,
                 )

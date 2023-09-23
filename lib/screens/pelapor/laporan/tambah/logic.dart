@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/date_utils.dart';
+import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';
 import 'package:sistem_pelaporan/values/pick_file_utils.dart';
-
-import '../../../../components/pick_maps/pick_maps.dart';
-import '../../../../values/navigate_utils.dart';
 
 class Logic {
   final fs = FirebaseServices();
@@ -38,17 +37,33 @@ class Logic {
     });
   }
 
-  Future<void> onPickMaps(setState) async {
-    final result = await navigatePush(const PickMapsComponent());
-    setState(() {
-      location = {
-        "latitude": result.latitude,
-        "longitude": result.longitude,
-      };
-    });
+  // Future<void> onPickMaps(setState) async {
+  //   final result = await navigatePush(const PickMapsComponent());
+  //   setState(() {
+  //     location = {
+  //       "latitude": result.latitude,
+  //       "longitude": result.longitude,
+  //     };
+  //   });
+  // }
+
+  Future<void> getCurrentLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+      );
+
+      double latitude = position.latitude;
+      double longitude = position.longitude;
+
+      print('Latitude: $latitude, Longitude: $longitude');
+      processingAdd(latitude, longitude);
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
-  Future<void> onAdd() async {
+  Future<void> processingAdd(double latitude, double longitude) async {
     showLoaderDialog();
     final txtNamaPelapor = namaPelapor.text;
     final txtJenisLaporan = jenisLaporan.text;
@@ -61,8 +76,7 @@ class Logic {
         txtJenisLaporan != "" &&
         txtDeskripsi != "" &&
         txtNoTelepon != "" &&
-        file != null &&
-        location.isNotEmpty) {
+        file != null) {
       try {
         if (file == null) throw ArgumentError("file belum di pilih");
         final urlFile = await fs.uploadFile(file!, "laporan");
@@ -74,7 +88,7 @@ class Logic {
           "no_telepon": txtNoTelepon,
           "file": urlFile,
           "type": "masuk",
-          "lokasi": location,
+          "lokasi": {"latitude": latitude, "longitude": longitude},
           "type_file": typeFile,
           "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}"
         };
@@ -93,5 +107,9 @@ class Logic {
       closeDialog();
       showToast("Inputan tidak boleh kosong!");
     }
+  }
+
+  Future<void> onAdd() async {
+    getCurrentLocation();
   }
 }

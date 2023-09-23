@@ -49,6 +49,7 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 ),
                 V(16),
                 TextfieldComponent(
+                  inputType: TextInputType.number,
                   label: "No telepon",
                   controller: l.noTelepon,
                 ),
@@ -91,34 +92,34 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                   ),
                 ),
                 V(16),
-                Center(
-                  child: l.location.isNotEmpty
-                      ? Wrap(
-                          direction: Axis.vertical,
-                          children: [
-                            Container(
-                              width: 200,
-                              child: TextComponent(
-                                "${l.location}",
-                                size: 14,
-                              ),
-                            ),
-                            V(8),
-                          ],
-                        )
-                      : Container(),
-                ),
-                Center(
-                  child: ButtonElevatedComponent(
-                    "Pilih lokasi pelaporan",
-                    onPressed: () async {
-                      l.onPickMaps(setState);
-                    },
-                    bg: Colors.red,
-                    w: 0.6.w,
-                  ),
-                ),
-                V(48),
+                // Center(
+                //   child: l.location.isNotEmpty
+                //       ? Wrap(
+                //           direction: Axis.vertical,
+                //           children: [
+                //             Container(
+                //               width: 200,
+                //               child: TextComponent(
+                //                 "${l.location}",
+                //                 size: 14,
+                //               ),
+                //             ),
+                //             V(8),
+                //           ],
+                //         )
+                //       : Container(),
+                // ),
+                // Center(
+                //   child: ButtonElevatedComponent(
+                //     "Pilih lokasi pelaporan",
+                //     onPressed: () async {
+                //       l.onPickMaps(setState);
+                //     },
+                //     bg: Colors.red,
+                //     w: 0.6.w,
+                //   ),
+                // ),
+                V(24),
                 Center(
                   child: ButtonElevatedComponent("Kirim laporan", onPressed: () async {
                     l.onAdd();
