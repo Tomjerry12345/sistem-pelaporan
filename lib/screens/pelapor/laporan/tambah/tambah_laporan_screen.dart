@@ -61,9 +61,12 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                           ? Wrap(
                               direction: Axis.vertical,
                               children: [
-                                TextComponent(
-                                  getNameFile(l.file!),
-                                  size: 14,
+                                Container(
+                                  width: 250,
+                                  child: TextComponent(
+                                    getNameFile(l.file!),
+                                    size: 14,
+                                  ),
                                 ),
                               ],
                             )
@@ -72,22 +75,23 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 V(24),
                 Center(
                   child: ButtonElevatedComponent(
-                    "Foto / Bukti video",
+                    "Bukti Video",
                     onPressed: () {
-                      dialogShow(
-                          context: context,
-                          widget: menuDialog(context, [
-                            ItemMenuDialog(
-                                title: "Pilih image",
-                                onPressed: () {
-                                  l.onPickFile("image", setState);
-                                }),
-                            ItemMenuDialog(
-                                title: "Pilih video",
-                                onPressed: () async {
-                                  l.onPickFile("video", setState);
-                                })
-                          ]));
+                      // dialogShow(
+                      //     context: context,
+                      //     widget: menuDialog(context, [
+                      //       ItemMenuDialog(
+                      //           title: "Pilih image",
+                      //           onPressed: () {
+                      //             l.onPickFile("image", setState);
+                      //           }),
+                      //       ItemMenuDialog(
+                      //           title: "Pilih video",
+                      //           onPressed: () async {
+                      //             l.onPickFile("video", setState);
+                      //           })
+                      //     ]));
+                      l.onPickFile("video", setState);
                     },
                     bg: Colors.orange,
                     w: 0.6.w,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sistem_pelaporan/screens/admin/admin_screen.dart';
 import 'package:sistem_pelaporan/screens/pelapor/pelapor_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
@@ -31,12 +32,12 @@ class Logic {
 
         if (txtPassword == d["password"]) {
           sharedPreferencesUtils.set(type: "string", key: "nama", value: d["nama"]);
-          navigatePush(const PelaporScreen(), isRemove: true);
-          // if (d["type"] == "admin") {
-          //   navigatePush(const AdminScreen(), isRemove: true);
-          // } else {
-          //   navigatePush(const PelaporScreen(), isRemove: true);
-          // }
+          // navigatePush(const PelaporScreen(), isRemove: true);
+          if (d["type"] == "polisi") {
+            navigatePush(const AdminScreen(), isRemove: true);
+          } else {
+            navigatePush(const PelaporScreen(), isRemove: true);
+          }
         } else {
           showToast("Password salah");
           closeDialog();

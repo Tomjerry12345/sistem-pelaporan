@@ -39,14 +39,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   Container(width: 0.8.w, child: Image.asset("assets/images/bg_splash.png")),
                   V(48),
-                  ButtonElevatedComponent(
-                    "Laporan",
-                    onPressed: () {
-                      navigatePush(LaporanScreen());
-                    },
-                    w: 0.6.w,
-                  ),
-                  V(16),
+                  // ButtonElevatedComponent(
+                  //   "Laporan",
+                  //   onPressed: () {
+                  //     navigatePush(LaporanScreen());
+                  //   },
+                  //   w: 0.6.w,
+                  // ),
+                  // V(16),
                   ButtonElevatedComponent(
                     "Lokasi kejadian terdekat",
                     onPressed: () {

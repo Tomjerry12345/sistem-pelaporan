@@ -4,6 +4,11 @@ import 'package:image_picker/image_picker.dart';
 
 final _picker = ImagePicker();
 
+class PickerConstant {
+  static const camera = 0;
+  static const gallery = 1;
+}
+
 Future<File?> pickImage() async {
   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
@@ -14,8 +19,10 @@ Future<File?> pickImage() async {
   return image;
 }
 
-Future<File?> pickVideo() async {
-  final pickedFile = await _picker.pickVideo(source: ImageSource.gallery);
+Future<File?> pickVideo({int source = PickerConstant.camera}) async {
+  final pickedFile = source == PickerConstant.camera
+      ? await _picker.pickVideo(source: ImageSource.camera)
+      : await _picker.pickVideo(source: ImageSource.gallery);
 
   if (pickedFile == null) return null;
 
