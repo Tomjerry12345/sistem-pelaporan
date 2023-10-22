@@ -5,7 +5,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
-import 'package:sistem_pelaporan/values/constant.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';
 
 class TitikRawanScreen extends StatefulWidget {
@@ -17,10 +16,6 @@ class TitikRawanScreen extends StatefulWidget {
 
 class _TitikRawanScreenState extends State<TitikRawanScreen> {
   final fs = FirebaseServices();
-
-  String _message = 'Finding route...';
-  final double _defaultStrokeWidth = 3.0;
-  final Color _defaultColor = Colors.blue;
 
   LocationSettings locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.high,
@@ -102,12 +97,10 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const padding = 50.0;
-
     return Scaffold(
         body: centerMaps != null
             ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: fs.getDataStreamCollection("laporan"),
+                stream: fs.getDataQueryStream("laporan", "type", "keluar"),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final data = snapshot.data!.docs;
@@ -189,11 +182,5 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
             : Center(
                 child: CircularProgressIndicator(),
               ));
-  }
-
-  void _updateMessage(bool isRouteAvailable) {
-    setState(() {
-      _message = isRouteAvailable ? 'Found route' : 'No route found';
-    });
   }
 }

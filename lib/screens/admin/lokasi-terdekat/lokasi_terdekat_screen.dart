@@ -96,7 +96,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
 
   void getDistance(Position position) async {
     try {
-      final listUserLoc = await fs.getDataCollection("laporan");
+      final listUserLoc = await fs.getDataCollectionByQuery("laporan", "type", "keluar");
 
       final List<Map<String, dynamic>> listDatauser = [
         {
