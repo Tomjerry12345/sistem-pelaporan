@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
+import 'package:sistem_pelaporan/components/button/link_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/components/textfield/textfield_component.dart';
 import 'package:sistem_pelaporan/components/textfield/textfield_password_component.dart';
@@ -36,14 +37,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 size: 24,
               ),
               V(16),
-              const TextComponent("Silahkan login terlebih dahulu untuk melanjutkan",
-                  size: 16, weight: FW.light),
+              const TextComponent(
+                  "Silahkan login terlebih dahulu untuk melanjutkan",
+                  size: 16,
+                  weight: FW.light),
               V(48),
-              TextfieldComponent(label: "NIK", controller: l.nik, inputType: TextInputType.number),
+              TextfieldComponent(
+                  label: "NIK",
+                  controller: l.nik,
+                  inputType: TextInputType.number),
               V(24),
               TextfieldPasswordComponent(
                 label: "Password",
                 controller: l.password,
+              ),
+              V(24),
+              LinkComponent(
+                "Lupa password?",
+                onTap: () {
+                  l.onLupaPassword();
+                },
               ),
               V(48),
               ButtonElevatedComponent(

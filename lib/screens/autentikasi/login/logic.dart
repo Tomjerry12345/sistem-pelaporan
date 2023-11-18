@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sistem_pelaporan/screens/admin/admin_screen.dart';
+import 'package:sistem_pelaporan/screens/autentikasi/lupa-password/lupa_password_screen.dart';
 import 'package:sistem_pelaporan/screens/pelapor/pelapor_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
@@ -13,7 +14,7 @@ class Logic {
 
   final fs = FirebaseServices();
 
-  final sharedPreferencesUtils = SharedPreferencesUtils();
+  // final sharedPreferencesUtils = SharedPreferencesUtils();
 
   Future<void> onLogin() async {
     showLoaderDialog();
@@ -30,8 +31,12 @@ class Logic {
       if (res.isNotEmpty) {
         final d = res[0];
 
-        if (txtPassword == d["password"]) {
-          sharedPreferencesUtils.set(type: "string", key: "nama", value: d["nama"]);
+        final resUser =
+            await fs.signInWithEmailAndPassword(d["email"], txtPassword);
+        final user = resUser.user;
+
+        if (user?.emailVerified == true) {
+          SharedPreferencesUtils.set(key: "nama", value: d["nama"]);
           // navigatePush(const PelaporScreen(), isRemove: true);
           if (d["type"] == "polisi") {
             navigatePush(const AdminScreen(), isRemove: true);
@@ -39,16 +44,20 @@ class Logic {
             navigatePush(const PelaporScreen(), isRemove: true);
           }
         } else {
-          showToast("Password salah");
-          closeDialog();
+          await user?.sendEmailVerification();
+          throw ArgumentError(
+              "Email belum di verifikasi, silahkan cek email untuk verifikasi");
         }
       } else {
-        showToast("NIK tidak di temukan");
-        closeDialog();
+        throw ArgumentError("NIK tidak di temukan");
       }
     } catch (e) {
-      showToast(e);
+      showSnackbar(e, color: "e");
       closeDialog();
     }
+  }
+
+  void onLupaPassword() {
+    navigatePush(LupaPasswordScreen());
   }
 }

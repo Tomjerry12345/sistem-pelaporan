@@ -24,7 +24,7 @@ class TextfieldDropdownComponent extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
             ),
             filled: true,
-            hintStyle: TextStyle(color: Colors.grey[800]),
+            // hintStyle: TextStyle(color: Colors.grey[800]),
             hintText: hintText,
             fillColor: Colors.white),
         dropDownList: items!

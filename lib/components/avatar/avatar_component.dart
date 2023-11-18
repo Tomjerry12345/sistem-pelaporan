@@ -91,12 +91,15 @@ class _AvatarComponentState extends State<AvatarComponent> {
       height: widget.positionIconH,
       child: Stack(
         children: [
-          CircleAvatar(
+          CircleAvatar(      
             backgroundImage: (galleryFile == null
-                ? NetworkImage(widget.url)
+                ? 
+                // AssetImage(widget.url)
+                NetworkImage(widget.url)
                 : FileImage(galleryFile!)) as ImageProvider,
             radius: widget.size,
           ),
+          
           widget.icon != null
               ? Align(
                   alignment: widget.positionIcon,

@@ -14,26 +14,37 @@ class FirebaseServices {
 
   Future<void> signOut() => _auth.signOut();
 
-  Future<UserCredential> registerWithEmailAndPassword(String email, String password) =>
+  Future<UserCredential> registerWithEmailAndPassword(
+          String email, String password) =>
       _auth.createUserWithEmailAndPassword(email: email, password: password);
 
-  Future<UserCredential> signInWithEmailAndPassword(String email, String password) =>
+  Future<UserCredential> signInWithEmailAndPassword(
+          String email, String password) =>
       _auth.signInWithEmailAndPassword(email: email, password: password);
+
+  Future<void> resetPassword(String email) =>
+      _auth.sendPasswordResetEmail(email: email);
 
   Future addDataCollection(String collection, Map<String, dynamic> data) =>
       _db.collection(collection).add(data);
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getDataStreamCollection(String collection) =>
+  Stream<QuerySnapshot<Map<String, dynamic>>> getDataStreamCollection(
+          String collection) =>
       _db.collection(collection).snapshots();
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getDataStreamDoc(String collection, String doc) =>
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getDataStreamDoc(
+          String collection, String doc) =>
       _db.collection(collection).doc(doc).snapshots();
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getDataQueryStream(
           String collection, String query, dynamic value) =>
       _db.collection(collection).where(query, isEqualTo: value).snapshots();
   Stream<QuerySnapshot<Map<String, dynamic>>> getDataTwoQueryStream(
-          String collection, String query, dynamic value, String query1, dynamic value1) =>
+          String collection,
+          String query,
+          dynamic value,
+          String query1,
+          dynamic value1) =>
       _db
           .collection(collection)
           .where(query, isEqualTo: value)
@@ -47,15 +58,18 @@ class FirebaseServices {
     return data.docs;
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getDataDoc(String collection, String doc) async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> getDataDoc(
+      String collection, String doc) async {
     final data = await _db.collection(collection).doc(doc).get();
 
     return data;
   }
 
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getDataCollectionByQuery(
-      String collection, String query, dynamic value) async {
-    final data = await _db.collection(collection).where(query, isEqualTo: value).get();
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      getDataCollectionByQuery(
+          String collection, String query, dynamic value) async {
+    final data =
+        await _db.collection(collection).where(query, isEqualTo: value).get();
 
     return data.docs;
   }
@@ -63,18 +77,22 @@ class FirebaseServices {
   Future<void> updateDataAllDoc(String collection, String doc, data) async =>
       _db.collection(collection).doc(doc).set(data);
 
-  Future<void> updateDataSpecifictDoc(String collection, String doc, data) async =>
+  Future<void> updateDataSpecifictDoc(
+          String collection, String doc, data) async =>
       _db.collection(collection).doc(doc).update(data);
 
-  Future<void> updateDataCollectionByQuery(String collection, String query, dynamic value) async {
-    final res = await _db.collection(collection).where(query, isEqualTo: value).get();
+  Future<void> updateDataCollectionByQuery(
+      String collection, String query, dynamic value) async {
+    final res =
+        await _db.collection(collection).where(query, isEqualTo: value).get();
     logO("res", m: res.size);
     await res.docs[0].data().update(query, value);
   }
 
-  void updateDataCollectionByTwoQuery(
-      String collection, String query, dynamic value, String query1, dynamic value1) async {
-    final res = await _db.collection(collection).where(query, isEqualTo: value).get();
+  void updateDataCollectionByTwoQuery(String collection, String query,
+      dynamic value, String query1, dynamic value1) async {
+    final res =
+        await _db.collection(collection).where(query, isEqualTo: value).get();
 
     final ref = res.docs[0].reference;
 
@@ -88,7 +106,8 @@ class FirebaseServices {
 
   Future uploadFile(File file, String type) async {
     String fileName = basename(file.path);
-    final firebaseStorageRef = FirebaseStorage.instance.ref().child('$type/$fileName');
+    final firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('$type/$fileName');
     final uploadTask = await firebaseStorageRef.putFile(file);
     final taskSnapshot = uploadTask.ref.getDownloadURL();
     return taskSnapshot;

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/components/textfield/textfield_component.dart';
-import 'package:sistem_pelaporan/models/item_menu_dialog.dart';
-import 'package:sistem_pelaporan/values/dialog_utils.dart';
+import 'package:sistem_pelaporan/components/textfield/textfield_dropdown_component%20.dart';
 import 'package:sistem_pelaporan/values/pick_file_utils.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
 import 'package:sistem_pelaporan/values/position_utils.dart';
@@ -36,21 +35,32 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 TextfieldComponent(
                   label: "Nama pelapor",
                   controller: l.namaPelapor,
+                  enabled: false,
                 ),
                 V(16),
-                TextfieldComponent(
-                  label: "Jenis laporan",
+                TextfieldDropdownComponent(
+                  hintText: "Jenis laporan",
                   controller: l.jenisLaporan,
+                  items: const [
+                    {"name": "Perampokan", "value": "Perampokan"},
+                    {"name": "Begal", "value": "Begal"}
+                  ],
                 ),
                 V(16),
                 TextfieldComponent(
-                  label: "Deskripsi",
+                  label: "Kejadian seperti apa?",
                   controller: l.deskripsi,
                 ),
                 V(16),
                 TextfieldComponent(
                   inputType: TextInputType.number,
-                  label: "No telepon",
+                  label: "No telepon alternatif",
+                  controller: l.noTelepon,
+                ),
+                V(16),
+                TextfieldComponent(
+                  inputType: TextInputType.streetAddress,
+                  label: "Alamat",
                   controller: l.noTelepon,
                 ),
                 V(32),

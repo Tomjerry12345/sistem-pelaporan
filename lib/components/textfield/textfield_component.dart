@@ -7,6 +7,8 @@ class TextfieldComponent extends StatelessWidget {
   final Color color;
   final TextInputType inputType;
   final String label;
+  final bool enabled;
+
   const TextfieldComponent(
       {super.key,
       this.hintText = "",
@@ -14,11 +16,12 @@ class TextfieldComponent extends StatelessWidget {
       this.controller,
       this.color = Colors.white70,
       this.inputType = TextInputType.text,
-      this.label = ""});
+      this.label = "", this.enabled = true});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enabled: enabled,
       keyboardType: inputType,
       controller: controller,
       onChanged: onChanged,

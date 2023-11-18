@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
@@ -7,19 +8,29 @@ import 'package:sistem_pelaporan/values/date_utils.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';
 import 'package:sistem_pelaporan/values/pick_file_utils.dart';
+import 'package:sistem_pelaporan/values/shared_preferences_utils.dart';
 
 class Logic {
   final fs = FirebaseServices();
 
   TextEditingController namaPelapor = TextEditingController();
-  TextEditingController jenisLaporan = TextEditingController();
+  SingleValueDropDownController jenisLaporan = SingleValueDropDownController();
   TextEditingController deskripsi = TextEditingController();
   TextEditingController noTelepon = TextEditingController();
+  TextEditingController alamat = TextEditingController();
 
   File? file;
   String typeFile = "";
   Map location = {};
   bool loadingImage = false;
+
+  Logic() {
+    onGet();
+  }
+
+  Future<void> onGet() async {
+    namaPelapor.text = await SharedPreferencesUtils.get(key: "nama");
+  }
 
   Future<void> onPickFile(key, setState) async {
     try {
@@ -35,8 +46,6 @@ class Logic {
         p = await pickVideo();
         typeFile = "video";
       }
-
-      logO("typeFile");
 
       setState(() {
         loadingImage = false;
@@ -78,48 +87,45 @@ class Logic {
   }
 
   Future<void> processingAdd(double latitude, double longitude) async {
-    showLoaderDialog();
-    final txtNamaPelapor = namaPelapor.text;
-    final txtJenisLaporan = jenisLaporan.text;
-    final txtDeskripsi = deskripsi.text;
-    final txtNoTelepon = noTelepon.text;
+    try {
+      showLoaderDialog();
+      final txtNamaPelapor = namaPelapor.text;
+      final txtJenisLaporan = jenisLaporan.dropDownValue?.value;
+      final txtDeskripsi = deskripsi.text;
+      final txtNoTelepon = noTelepon.text;
+      final txtAlamat = alamat.text;
 
-    // final file = image ?? video;
-
-    if (txtNamaPelapor != "" &&
-        txtJenisLaporan != "" &&
-        txtDeskripsi != "" &&
-        txtNoTelepon != "" &&
-        file != null) {
-      try {
-        if (file == null) throw ArgumentError("file belum di pilih");
-        final urlFile = await fs.uploadFile(file!, "laporan");
-        final date = formatDate(getTimeNow());
-        final req = {
-          "nama": txtNamaPelapor,
-          "jenis_laporan": txtJenisLaporan,
-          "deskripsi": txtDeskripsi,
-          "no_telepon": txtNoTelepon,
-          "file": urlFile,
-          "type": "masuk",
-          "lokasi": {"latitude": latitude, "longitude": longitude},
-          "type_file": typeFile,
-          "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}"
-        };
-
-        fs.addDataCollection("laporan", req);
-
-        closeDialog();
-
-        navigatePop();
-      } catch (e) {
-        closeDialog();
-        logO("error tambah laporan", m: e);
-        showToast(e);
+      // final file = image ?? video;
+      if (txtNamaPelapor == "" &&
+          txtJenisLaporan == "" &&
+          txtDeskripsi == "" &&
+          txtNoTelepon == "" &&
+          txtAlamat == "") {
+        throw ArgumentError("Inputan tidak boleh kosong!");
       }
-    } else {
+      if (file == null) throw ArgumentError("file belum di pilih");
+      final urlFile = await fs.uploadFile(file!, "laporan");
+      final date = formatDate(getTimeNow());
+      final req = {
+        "nama": txtNamaPelapor,
+        "jenis_laporan": txtJenisLaporan,
+        "deskripsi": txtDeskripsi,
+        "no_telepon": txtNoTelepon,
+        "file": urlFile,
+        "type": "masuk",
+        "lokasi": {"latitude": latitude, "longitude": longitude},
+        "type_file": typeFile,
+        "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}"
+      };
+
+      fs.addDataCollection("laporan", req);
+
       closeDialog();
-      showToast("Inputan tidak boleh kosong!");
+
+      navigatePop();
+    } catch (e) {
+      closeDialog();
+      showSnackbar(e, color: "e");
     }
   }
 

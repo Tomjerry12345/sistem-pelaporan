@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: const SplashScreen(),
+        scaffoldMessengerKey: GlobalContext.messengerKey,
         navigatorKey: GlobalContext.navigatorKey);
   }
 }

@@ -7,7 +7,7 @@ import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/shared_preferences_utils.dart';
 
 class Logic {
-  final sharedPreferencesUtils = SharedPreferencesUtils();
+  // final sharedPreferencesUtils = SharedPreferencesUtils();
 
   String nama = "";
 
@@ -16,7 +16,7 @@ class Logic {
   }
 
   Future<void> onGet(void Function(VoidCallback fn) setState) async {
-    final nama = await sharedPreferencesUtils.get(type: "string", key: "nama");
+    final nama = await SharedPreferencesUtils.get(key: "nama");
     setState(() {
       this.nama = nama;
     });

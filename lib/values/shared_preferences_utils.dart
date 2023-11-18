@@ -1,27 +1,44 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesUtils {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  static final Future<SharedPreferences> _prefs =
+      SharedPreferences.getInstance();
 
-  Future<dynamic> get({type = "int", key = ""}) async {
+  static Future<dynamic>? get({key = ""}) async {
     final SharedPreferences prefs = await _prefs;
 
-    if (type == "int") {
-      return prefs.getInt(key);
-    } else if (type == "string") {
-      return prefs.getString(key);
-    }
+    final typePrefs = prefs.get(key);
 
-    return null;
+    if (typePrefs is int) {
+      return prefs.getInt(key);
+    } else if (typePrefs is String) {
+      return prefs.getString(key);
+    } else {
+      return null;
+    }
   }
 
-  void set({type = "int", key = "", value}) async {
+  static void set({key = "", value}) async {
     final SharedPreferences prefs = await _prefs;
 
-    if (type == "int") {
+    final typePrefs = key;
+
+    if (typePrefs is int) {
       prefs.setInt(key, value);
-    } else if (type == "string") {
+    } else if (typePrefs is String) {
       prefs.setString(key, value);
+    }
+  }
+
+  static void reset({key}) async {
+    final SharedPreferences prefs = await _prefs;
+
+    final typePrefs = prefs.get(key);
+
+    if (typePrefs is int) {
+      prefs.setInt(key, 0);
+    } else if (typePrefs is String) {
+      prefs.setString(key, "");
     }
   }
 }

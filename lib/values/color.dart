@@ -21,8 +21,19 @@ MaterialColor getMaterialColor(Color color) {
   return MaterialColor(color.value, shades);
 }
 
-MaterialColor primaryColor = getMaterialColor(const Color.fromRGBO(118, 151, 1, 1));
-MaterialColor backgroundAutentikasiColor = getMaterialColor(const Color.fromRGBO(167, 168, 164, 1));
+Color hexToColor(String code) {
+  return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+}
+
+MaterialColor primaryColor =
+    getMaterialColor(const Color.fromRGBO(118, 151, 1, 1));
+MaterialColor backgroundAutentikasiColor =
+    getMaterialColor(const Color.fromRGBO(167, 168, 164, 1));
 MaterialColor btnColor = getMaterialColor(const Color.fromRGBO(0, 0, 0, 1));
-MaterialColor secondaryColor = getMaterialColor(const Color.fromRGBO(118, 151, 1, 0.3));
-MaterialColor linkColor = getMaterialColor(const Color.fromRGBO(21, 103, 146, 1));
+MaterialColor secondaryColor =
+    getMaterialColor(const Color.fromRGBO(118, 151, 1, 0.3));
+MaterialColor linkColor =
+    getMaterialColor(const Color.fromRGBO(21, 103, 146, 1));
+
+Color succesColor = Colors.green;
+Color errorColor = Colors.red;
