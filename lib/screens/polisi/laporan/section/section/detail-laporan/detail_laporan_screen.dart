@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/app-bar/app_bar_component.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
-import 'package:sistem_pelaporan/screens/admin/laporan/laporan_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/laporan/laporan_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/font_custom.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';

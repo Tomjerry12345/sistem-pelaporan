@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
-import 'package:sistem_pelaporan/screens/admin/laporan/laporan_screen.dart';
-import 'package:sistem_pelaporan/screens/admin/lokasi-terdekat/lokasi_terdekat_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/laporan/laporan_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/lokasi-terdekat/lokasi_terdekat_screen.dart';
 import 'package:sistem_pelaporan/screens/pelapor/laporan/tambah/tambah_laporan_screen.dart';
 import 'package:sistem_pelaporan/screens/pelapor/titik_rawan/titik_rawan_screen.dart';
 import 'package:sistem_pelaporan/values/font_custom.dart';
@@ -39,14 +39,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   Container(width: 0.8.w, child: Image.asset("assets/images/bg_splash.png")),
                   V(48),
-                  // ButtonElevatedComponent(
-                  //   "Laporan",
-                  //   onPressed: () {
-                  //     navigatePush(LaporanScreen());
-                  //   },
-                  //   w: 0.6.w,
-                  // ),
-                  // V(16),
+                  ButtonElevatedComponent(
+                    "Laporan",
+                    onPressed: () {
+                      navigatePush(LaporanScreen());
+                    },
+                    w: 0.6.w,
+                  ),
+                  V(16),
                   ButtonElevatedComponent(
                     "Lokasi kejadian terdekat",
                     onPressed: () {

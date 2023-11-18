@@ -61,7 +61,7 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 TextfieldComponent(
                   inputType: TextInputType.streetAddress,
                   label: "Alamat",
-                  controller: l.noTelepon,
+                  controller: l.alamat,
                 ),
                 V(32),
                 Center(

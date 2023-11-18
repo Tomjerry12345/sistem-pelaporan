@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sistem_pelaporan/screens/admin/admin_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/polisi_screen.dart';
 import 'package:sistem_pelaporan/screens/autentikasi/lupa-password/lupa_password_screen.dart';
 import 'package:sistem_pelaporan/screens/pelapor/pelapor_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
@@ -14,9 +14,12 @@ class Logic {
 
   final fs = FirebaseServices();
 
+  final FocusNode focusNode = FocusNode();
+
   // final sharedPreferencesUtils = SharedPreferencesUtils();
 
   Future<void> onLogin() async {
+    focusNode.unfocus();
     showLoaderDialog();
     String txtNik = nik.text;
     String txtPassword = password.text;
@@ -39,7 +42,7 @@ class Logic {
           SharedPreferencesUtils.set(key: "nama", value: d["nama"]);
           // navigatePush(const PelaporScreen(), isRemove: true);
           if (d["type"] == "polisi") {
-            navigatePush(const AdminScreen(), isRemove: true);
+            navigatePush(const PolisiScreen(), isRemove: true);
           } else {
             navigatePush(const PelaporScreen(), isRemove: true);
           }

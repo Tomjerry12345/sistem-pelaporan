@@ -57,41 +57,28 @@ class Logic {
 
       if (res.isEmpty) {
         resUser = await fs.registerWithEmailAndPassword(txtEmail, txtPassword);
-      } else {
-        final d = res.first.data();
-        resUser = await fs.signInWithEmailAndPassword(d["email"], d["password"]);
-      }
 
-      final user = resUser.user;
+        final user = resUser.user;
 
-      final isVerified = user?.emailVerified;
+        final urlFile = await fs.uploadFile(getImage!, "profile");
 
-      logO("isVerified", m: isVerified);
+        final data = {
+          "image": urlFile,
+          "nama": txtNama,
+          "email": txtEmail,
+          "nik": txtNik,
+          "jenis_kelamin": txtJenisKelamin,
+          "no_telepon": txtNoTelepon,
+          "type": "user"
+        };
 
-      if (!isVerified!) {
-        if (!res.isNotEmpty) {
-          final urlFile = await fs.uploadFile(getImage!, "profile");
-
-          final data = {
-            "image": urlFile,
-            "nama": txtNama,
-            "email": txtEmail,
-            "nik": txtNik,
-            "jenis_kelamin": txtNama,
-            "no_telepon": txtNama,
-            "password": txtPassword,
-            "type": "user"
-          };
-          await fs.addDataCollection("user", data);
-        }
+        await fs.addDataCollection("user", data);
 
         await user?.sendEmailVerification();
 
-        showSnackbar("Silahkan cek email anda untuk verifikasi",
-            color: "e");
+        showSnackbar("Silahkan cek email anda untuk verifikasi", color: "e");
       } else {
-         showSnackbar("Akun sudah terdaftar silahkan lanjut login",
-            color: "s");
+        showSnackbar("Akun sudah terdaftar silahkan lanjut login", color: "s");
       }
 
       closeDialog();

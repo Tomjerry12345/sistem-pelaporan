@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sistem_pelaporan/screens/admin/laporan/section/section/detail-laporan/detail_laporan_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/laporan/section/section/detail-laporan/detail_laporan_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
-import 'package:sistem_pelaporan/values/output_utils.dart';
 
 class LaporanMasukScreen extends StatefulWidget {
   const LaporanMasukScreen({super.key});

@@ -5,9 +5,10 @@ class TextfieldPasswordComponent extends StatefulWidget {
   final String label;
   final Function(String)? onChanged;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
 
   const TextfieldPasswordComponent(
-      {super.key, this.hintText = "", this.onChanged, this.controller, this.label = ""});
+      {super.key, this.hintText = "", this.onChanged, this.controller, this.label = "", this.focusNode});
 
   @override
   State<TextfieldPasswordComponent> createState() => _TextfieldPasswordComponentState();
@@ -19,6 +20,7 @@ class _TextfieldPasswordComponentState extends State<TextfieldPasswordComponent>
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: widget.focusNode,
       onChanged: widget.onChanged,
       controller: widget.controller,
       cursorColor: Colors.black,

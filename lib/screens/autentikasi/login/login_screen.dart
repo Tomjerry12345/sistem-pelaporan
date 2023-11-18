@@ -50,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextfieldPasswordComponent(
                 label: "Password",
                 controller: l.password,
+                focusNode: l.focusNode,
               ),
               V(24),
               LinkComponent(
