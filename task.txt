@@ -9,9 +9,9 @@ user:
 
 - Ini nama pelapor tidak usah krna harus otomatis trcatat pada saat login mi, ✅
   Deskripsi diganti dsitu jadi kejadian seperti apa?,  ✅
-  itu yang di jenis laporan harus ada option dsitu, jadi pelapor langsung na klik ji, ❌
+  itu yang di jenis laporan harus ada option dsitu, jadi pelapor langsung na klik ji, ✅❌
   itu nmor telepon tambahkan jadi No telepon alternatif,  ✅
-  trus itu foto/Bukti video dihapus tulisan fotonya, ❌
+  trus itu foto/Bukti video dihapus tulisan fotonya, ✅❌
   terus ada input alamat secara manual juga harus ada ✅
 
 - Ini aplikasi bisa langsung terhubung ke polisi juga tanpa melalui verivikasi oleh admin, 
