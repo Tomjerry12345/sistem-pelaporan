@@ -16,7 +16,7 @@ user:
 
 - Ini aplikasi bisa langsung terhubung ke polisi juga tanpa melalui verivikasi oleh admin, 
   terus kalau polisi sudah menuju ke lokasi pelapor ada muncul notifikasi ke akun  
-  nya pelapor bahwa polisi sedang dalam perjalanan ❌
+  nya pelapor bahwa polisi sedang dalam perjalanan ✅
 
 - splashscreen ✅
 - login ✅

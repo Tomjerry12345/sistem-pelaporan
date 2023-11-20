@@ -89,11 +89,14 @@ class Logic {
   Future<void> processingAdd(double latitude, double longitude) async {
     try {
       showLoaderDialog();
+
       final txtNamaPelapor = namaPelapor.text;
       final txtJenisLaporan = jenisLaporan.dropDownValue?.value;
       final txtDeskripsi = deskripsi.text;
       final txtNoTelepon = noTelepon.text;
       final txtAlamat = alamat.text;
+
+      final user = fs.getUser();
 
       // final file = image ?? video;
       if (txtNamaPelapor == "" &&
@@ -107,6 +110,7 @@ class Logic {
       final urlFile = await fs.uploadFile(file!, "laporan");
       final date = formatDate(getTimeNow());
       final req = {
+        "email": user?.email,
         "nama": txtNamaPelapor,
         "jenis_laporan": txtJenisLaporan,
         "deskripsi": txtDeskripsi,
@@ -115,7 +119,8 @@ class Logic {
         "type": "masuk",
         "lokasi": {"latitude": latitude, "longitude": longitude},
         "type_file": typeFile,
-        "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}"
+        "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}",
+        "konfirmasi_polisi": false
       };
 
       fs.addDataCollection("laporan", req);

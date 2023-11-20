@@ -4,6 +4,7 @@ import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/screens/polisi/laporan/section/section/detail-laporan/detail_laporan_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
+import 'package:sistem_pelaporan/services/notification_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 
 class AllLaporanScreen extends StatefulWidget {
@@ -29,8 +30,8 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
               if (data!.length > 0) {
                 return ListView.builder(
                   itemBuilder: (ctx, i) {
-                    final id = data![i].id;
-                    final value = data![i].data();
+                    final id = data[i].id;
+                    final value = data[i].data();
                     return Card(
                       color: Color.fromRGBO(239, 239, 239, 1),
                       child: InkWell(
@@ -45,7 +46,13 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                           trailing: Row(children: [
                             ButtonElevatedComponent(
                               "Segera ke sana",
-                              onPressed: () {},
+                              onPressed: () {
+                                NotificationServices.showNotification(
+                                    id: 1,
+                                    title: "Pemberitahuan Polisi",
+                                    body: "Segera kesana",
+                                    payload: "test");
+                              },
                             ),
                             Icon(Icons.arrow_right)
                           ]),
@@ -57,7 +64,9 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                 );
               }
 
-              return Center(child: TextComponent("Tidak ada laporan"),);
+              return Center(
+                child: TextComponent("Tidak ada laporan"),
+              );
             }
 
             return Center(

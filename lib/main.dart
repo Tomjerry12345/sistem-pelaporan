@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/screens/autentikasi/splash/splash_screen.dart';
+import 'package:sistem_pelaporan/services/notification_services.dart';
 import 'package:sistem_pelaporan/values/global_utils.dart';
-
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -10,6 +10,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationServices.initNotification();
   runApp(const MyApp());
 }
 
