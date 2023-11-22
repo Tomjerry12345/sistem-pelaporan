@@ -18,7 +18,8 @@ class _PolisiScreenState extends State<PolisiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarComponent(
-          title: "",
+          title: "Polsek Panakkukang Makassar",
+          maxLinesTitle: 2,
           rightOnPressed: () {
             SharedPreferencesUtils.reset(key: "nama");
             navigatePush(LoginScreen(), isRemove: true);

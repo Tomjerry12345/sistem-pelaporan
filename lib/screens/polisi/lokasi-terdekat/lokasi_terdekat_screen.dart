@@ -46,7 +46,8 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       showToast("Location services are disabled. Please enable the services");
-      logO("permission", m: "Location services are disabled. Please enable the services");
+      logO("permission",
+          m: "Location services are disabled. Please enable the services");
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -59,7 +60,8 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      showToast("Location permissions are permanently denied, we cannot request permissions.");
+      showToast(
+          "Location permissions are permanently denied, we cannot request permissions.");
       logO("permission",
           m: "Location permissions are permanently denied, we cannot request permissions.");
       return false;
@@ -96,7 +98,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
 
   void getDistance(Position position) async {
     try {
-      final listUserLoc = await fs.getDataCollectionByQuery("laporan", "type", "keluar");
+      final listUserLoc = await fs.getDataCollection("laporan");
 
       final List<Map<String, dynamic>> listDatauser = [
         {
@@ -155,8 +157,9 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                 children: [
                   FlutterMap(
                     options: MapOptions(
-                      bounds: LatLngBounds.fromPoints(
-                          userData!.map((uData) => uData["lokasi"] as LatLng).toList()),
+                      bounds: LatLngBounds.fromPoints(userData!
+                          .map((uData) => uData["lokasi"] as LatLng)
+                          .toList()),
                       boundsOptions: FitBoundsOptions(
                         padding: EdgeInsets.only(
                           left: padding,
@@ -168,7 +171,8 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                     ),
                     nonRotatedChildren: [
                       TileLayer(
-                        urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        urlTemplate:
+                            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                         subdomains: ['a', 'b', 'c'],
                       ),
                       MarkerLayer(
@@ -204,7 +208,9 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
-                      height: userData != null ? (userData!.length * 40) + (padding * 2) : 0,
+                      height: userData != null
+                          ? (userData!.length * 40) + (padding * 2)
+                          : 0,
                       child: ListView.builder(
                         itemBuilder: (ctx, i) {
                           final value = userData![i];
@@ -219,12 +225,16 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                                   leading: CircleAvatar(child: Text("A")),
                                   title: Text(value["nama"]),
                                   subtitle: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(value["jenis_laporan"]),
                                         V(8),
-                                        TextComponent("${jarak.toStringAsFixed(2)} km", size: 16),
+                                        TextComponent(
+                                            "${jarak.toStringAsFixed(2)} km",
+                                            size: 16),
                                       ]),
                                   // trailing: Icon(Icons.arrow_right),
                                 ),

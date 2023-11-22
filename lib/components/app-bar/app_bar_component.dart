@@ -19,6 +19,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   final Color fg;
   final double sizeTitle;
   final String textBadge;
+  final int? maxLinesTitle;
 
   const AppBarComponent(
       {super.key,
@@ -32,13 +33,15 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
       this.bg,
       this.fg = Colors.black,
       this.sizeTitle = 24,
-      this.textBadge = "0"});
+      this.textBadge = "0",
+      this.maxLinesTitle});
 
   Widget titleC() {
     return TextComponent(
       title,
       color: fg,
       size: sizeTitle,
+      maxLines: maxLinesTitle,
     );
   }
 

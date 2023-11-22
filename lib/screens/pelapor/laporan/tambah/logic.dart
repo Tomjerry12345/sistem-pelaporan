@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/date_utils.dart';
+import 'package:sistem_pelaporan/values/global_utils.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';
 import 'package:sistem_pelaporan/values/pick_file_utils.dart';
@@ -128,7 +130,17 @@ class Logic {
 
       closeDialog();
 
-      navigatePop();
+      // ignore: use_build_context_synchronously
+      AwesomeDialog(
+        context: ctx,
+        dialogType: DialogType.success,
+        animType: AnimType.rightSlide,
+        title: 'Berhasil',
+        desc: 'Laporan anda sedang di verifikasi',
+        btnOkOnPress: () {
+          navigatePop();
+        },
+      ).show();
     } catch (e) {
       closeDialog();
       showSnackbar(e, color: "e");

@@ -39,7 +39,8 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       showToast("Location services are disabled. Please enable the services");
-      logO("permission", m: "Location services are disabled. Please enable the services");
+      logO("permission",
+          m: "Location services are disabled. Please enable the services");
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -52,7 +53,8 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      showToast("Location permissions are permanently denied, we cannot request permissions.");
+      showToast(
+          "Location permissions are permanently denied, we cannot request permissions.");
       logO("permission",
           m: "Location permissions are permanently denied, we cannot request permissions.");
       return false;
@@ -100,7 +102,7 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
     return Scaffold(
         body: centerMaps != null
             ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: fs.getDataQueryStream("laporan", "type", "keluar"),
+                stream: fs.getDataStreamCollection("laporan"),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final data = snapshot.data!.docs;
@@ -124,7 +126,7 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
                           options: MapOptions(
                             center:
                                 centerMaps, // Pusat peta (latitude dan longitude Jakarta, Indonesia)
-                            zoom: 13.0, // Tingkat zoom awal
+                            zoom: 18.0, // Tingkat zoom awal
                           ),
                           nonRotatedChildren: [
                             TileLayer(
@@ -136,7 +138,8 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
                             MarkerLayer(
                                 markers: data.map((d) {
                               return Marker(
-                                  point: LatLng(d["lokasi"]["latitude"], d["lokasi"]["longitude"]),
+                                  point: LatLng(d["lokasi"]["latitude"],
+                                      d["lokasi"]["longitude"]),
                                   width: 35,
                                   height: 35,
                                   builder: (context) => Icon(

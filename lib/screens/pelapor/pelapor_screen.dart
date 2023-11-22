@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/app-bar/app_bar_component.dart';
-import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/screens/autentikasi/login/login_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/services/notification_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
-import 'package:sistem_pelaporan/values/output_utils.dart';
 import 'package:sistem_pelaporan/values/shared_preferences_utils.dart';
 
 import 'dashboard/dashboard_screen.dart';
@@ -52,58 +50,14 @@ class _PelaporScreenState extends State<PelaporScreen> {
           }
 
           return Scaffold(
-              // key: _scaffoldKey,
               appBar: AppBarComponent(
-                  title: "",
-                  // icLeft: Icons.notifications,
-                  // typeLeftWidget: TypeLeftWidget.badgeWidget,
-                  // textBadge: "$size",
-                  // leftOnPressed: () {
-                  //   print("test");
-                  //   _scaffoldKey.currentState?.openDrawer();
-                  // },
+                  title: "Polsek Panakkukang Makassar",
+                  sizeTitle: 20,
+                  maxLinesTitle: 2,
                   rightOnPressed: () {
                     SharedPreferencesUtils.reset(key: "nama");
                     navigatePush(LoginScreen(), isRemove: true);
                   }),
-              // drawer: Drawer(
-              //   child: ListView(
-              //     padding: EdgeInsets.zero,
-              //     children: [
-              //       Container(
-              //         height: 150,
-              //         child: DrawerHeader(
-              //           child: TextComponent(
-              //             'Notifications',
-              //             size: 18,
-              //             color: Colors.white,
-              //           ),
-              //           decoration: BoxDecoration(
-              //             color: Colors.black,
-              //           ),
-              //         ),
-              //       ),
-              //       ListView.builder(
-              //         shrinkWrap: true,
-              //         itemCount: 2,
-              //         itemBuilder: (BuildContext context, int index) {
-              //           return Column(
-              //             children: [
-              //               ListTile(
-              //                 title: Text("test"),
-              //                 onTap: () {
-              //                   // Tambahkan aksi yang ingin dilakukan saat notifikasi ditekan
-              //                   print('Notification ${index + 1} tapped');
-              //                 },
-              //               ),
-              //               Divider(), // Tambahkan Divider di sini
-              //             ],
-              //           );
-              //         },
-              //       ),
-              //     ],
-              //   ),
-              // ),
               body: DashboardScreen());
         });
   }
