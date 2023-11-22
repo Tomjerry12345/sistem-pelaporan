@@ -28,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextComponent(
-                "admin",
+                "polisi",
                 size: 18,
                 weight: FW.light,
               ),
@@ -37,7 +37,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               V(48),
               Column(
                 children: [
-                  Container(width: 0.8.w, child: Image.asset("assets/images/bg_splash.png")),
+                  Container(
+                      width: 0.8.w,
+                      child: Image.asset("assets/images/bg_splash.png")),
                   V(48),
                   ButtonElevatedComponent(
                     "Laporan",

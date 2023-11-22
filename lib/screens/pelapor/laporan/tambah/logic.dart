@@ -120,7 +120,8 @@ class Logic {
         "lokasi": {"latitude": latitude, "longitude": longitude},
         "type_file": typeFile,
         "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}",
-        "konfirmasi_polisi": false
+        "konfirmasi_polisi": false,
+        "notifikasi": false
       };
 
       fs.addDataCollection("laporan", req);

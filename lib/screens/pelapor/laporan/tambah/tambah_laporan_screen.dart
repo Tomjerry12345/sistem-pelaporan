@@ -42,8 +42,25 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                   hintText: "Jenis laporan",
                   controller: l.jenisLaporan,
                   items: const [
-                    {"name": "Perampokan", "value": "Perampokan"},
-                    {"name": "Begal", "value": "Begal"}
+                    {"name": "pencurian", "value": "pencurian"},
+                    {
+                      "name": "penyalagunaan narkoba",
+                      "value": "penyalagunaan narkoba"
+                    },
+                    {"name": "tindakan asusila", "value": "tindakan asusila"},
+                    {"name": "pencopetan", "value": "pencopetan"},
+                    {"name": "penjambretan", "value": "penjambretan"},
+                    {"name": "penodongan", "value": "penodongan"},
+                    {"name": "senjata tajam/api", "value": "senjata tajam/api"},
+                    {"name": "kekerasan fisik", "value": "kekerasan fisik"},
+                    {"name": "penganiayaan", "value": "penganiayaan"},
+                    {
+                      "name": "perusakan barang orang lain",
+                      "value": "perusakan barang orang lain"
+                    },
+                    {"name": "pembunuhan", "value": "pembunuhan"},
+                    {"name": "penipuan", "value": "penipuan"},
+                    {"name": "korupsi", "value": "korupsi"},
                   ],
                 ),
                 V(16),
@@ -137,7 +154,8 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 // ),
                 V(24),
                 Center(
-                  child: ButtonElevatedComponent("Kirim laporan", onPressed: () async {
+                  child: ButtonElevatedComponent("Kirim laporan",
+                      onPressed: () async {
                     l.onAdd();
                   }, w: 1.0.w),
                 ),

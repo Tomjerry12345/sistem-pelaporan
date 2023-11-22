@@ -8,6 +8,8 @@ class ButtonElevatedComponent extends StatelessWidget {
   final double? w;
   final double? h;
   final Color? cb;
+  final double? size;
+
   const ButtonElevatedComponent(this.title,
       {super.key,
       required this.onPressed,
@@ -15,7 +17,8 @@ class ButtonElevatedComponent extends StatelessWidget {
       this.fg = Colors.white,
       this.w,
       this.h,
-      this.cb});
+      this.cb,
+      this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,10 @@ class ButtonElevatedComponent extends StatelessWidget {
               side: BorderSide(color: cb ?? bg, width: 1)),
         ),
         onPressed: onPressed,
-        child: Text(title),
+        child: Text(
+          title,
+          style: TextStyle(fontSize: size),
+        ),
       ),
     );
   }

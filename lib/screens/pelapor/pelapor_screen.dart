@@ -35,10 +35,10 @@ class _PelaporScreenState extends State<PelaporScreen> {
           if (data.length > 0) {
             bool showNotif = false;
             data.forEach((e) async {
-              if (e["konfirmasi_polisi"]) {
+              if (e["notifikasi"]) {
                 showNotif = true;
                 await fs.updateDataSpecifictDoc(
-                    "laporan", e.id, {"konfirmasi_polisi": false});
+                    "laporan", e.id, {"notifikasi": false});
               }
             });
 

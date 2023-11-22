@@ -20,6 +20,7 @@ class _LaporanScreenState extends State<LaporanScreen> {
       child: Scaffold(
           appBar: AppBarComponent(
             title: "Laporan",
+            icRight: null,
             // tab: [
             //   Tab(
             //     text: "Laporan masuk",
@@ -33,8 +34,7 @@ class _LaporanScreenState extends State<LaporanScreen> {
           //     LaporanKeluarScreen(),
           //   ],
           // ),
-          body: AllLaporanScreen()
-          ),
+          body: AllLaporanScreen()),
     );
   }
 }

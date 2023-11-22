@@ -4,8 +4,9 @@ import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/screens/polisi/laporan/section/section/detail-laporan/detail_laporan_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
-import 'package:sistem_pelaporan/services/notification_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
+import 'package:sistem_pelaporan/values/output_utils.dart';
+import 'package:sistem_pelaporan/values/position_utils.dart';
 
 class AllLaporanScreen extends StatefulWidget {
   const AllLaporanScreen({super.key});
@@ -27,11 +28,12 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final data = snapshot.data?.docs;
-              if (data!.length > 0) {
+              if (data!.isNotEmpty) {
                 return ListView.builder(
                   itemBuilder: (ctx, i) {
                     final id = data[i].id;
                     final value = data[i].data();
+                    logO(value);
                     return Card(
                       color: Color.fromRGBO(239, 239, 239, 1),
                       child: InkWell(
@@ -43,17 +45,23 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                           leading: CircleAvatar(child: Text("A")),
                           title: Text(value["nama"]),
                           subtitle: Text(value["jenis_laporan"]),
-                          trailing: Row(children: [
-                            ButtonElevatedComponent(
-                              "Segera ke sana",
-                              onPressed: () {
-                                NotificationServices.showNotification(
-                                    id: 1,
-                                    title: "Pemberitahuan Polisi",
-                                    body: "Segera kesana",
-                                    payload: "test");
-                              },
-                            ),
+                          trailing:
+                              Row(mainAxisSize: MainAxisSize.min, children: [
+                            !value["konfirmasi_polisi"]
+                                ? ButtonElevatedComponent(
+                                    "segera ke sana",
+                                    w: 104,
+                                    size: 10,
+                                    onPressed: () async {
+                                      await fs.updateDataSpecifictDoc(
+                                          "laporan", id, {
+                                        "notifikasi": true,
+                                        "konfirmasi_polisi": true
+                                      });
+                                    },
+                                  )
+                                : Container(),
+                            H(8),
                             Icon(Icons.arrow_right)
                           ]),
                         ),

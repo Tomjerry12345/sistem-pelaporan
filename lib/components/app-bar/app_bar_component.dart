@@ -10,7 +10,7 @@ enum TypeLeftWidget {
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final IconData? icLeft;
-  final IconData icRight;
+  final IconData? icRight;
   final TypeLeftWidget typeLeftWidget;
   final Function()? leftOnPressed;
   final Function()? rightOnPressed;
