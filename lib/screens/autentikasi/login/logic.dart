@@ -40,7 +40,7 @@ class Logic {
 
         if (user?.emailVerified == true) {
           SharedPreferencesUtils.set(key: "nama", value: d["nama"]);
-          // navigatePush(const PelaporScreen(), isRemove: true);
+          SharedPreferencesUtils.set(key: "type", value: d["type"]);
           if (d["type"] == "polisi") {
             navigatePush(const PolisiScreen(), isRemove: true);
           } else {

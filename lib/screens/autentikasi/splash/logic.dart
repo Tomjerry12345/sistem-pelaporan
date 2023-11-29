@@ -1,21 +1,25 @@
+import 'package:sistem_pelaporan/screens/autentikasi/login/login_screen.dart';
 import 'package:sistem_pelaporan/screens/pelapor/pelapor_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/polisi_screen.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
-import 'package:sistem_pelaporan/values/output_utils.dart';
 import 'package:sistem_pelaporan/values/shared_preferences_utils.dart';
 
 class Logic {
-  // final sharedPreferencesUtils = SharedPreferencesUtils();
-
   Logic() {
     onGet();
   }
 
   Future<void> onGet() async {
-    final nama = await SharedPreferencesUtils.get(key: "nama");
+    final type = await SharedPreferencesUtils.get(key: "type");
 
-    logO(nama);
-    if (nama != "" && nama != null) {
-      navigatePush(const PelaporScreen(), isRemove: true);
+    if (type != "" && type != null) {
+      if (type == "polisi") {
+        navigatePush(const PolisiScreen(), isRemove: true);
+      } else {
+        navigatePush(const PelaporScreen(), isRemove: true);
+      }
+    } else {
+      navigatePush(const LoginScreen(), isRemove: true);
     }
   }
 }
