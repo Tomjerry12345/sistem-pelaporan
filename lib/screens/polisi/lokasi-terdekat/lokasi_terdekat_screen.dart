@@ -11,7 +11,7 @@ import 'package:sistem_pelaporan/values/constant.dart';
 import "package:http/http.dart" as http;
 import 'package:sistem_pelaporan/values/position_utils.dart';
 
-import '../../../values/algorith_dijkstra.dart';
+import '../../../values/algorithm_dijkstra.dart';
 import '../../../values/output_utils.dart';
 
 class LokasiTerdekatScreen extends StatefulWidget {
