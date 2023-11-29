@@ -205,6 +205,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                       // )
                     ],
                   ),
+                  V(10),
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
