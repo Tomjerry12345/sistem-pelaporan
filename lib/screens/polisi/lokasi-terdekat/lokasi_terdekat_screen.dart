@@ -110,6 +110,8 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
         },
       ];
 
+      final listDataFirst = [];
+
       for (var userData in listUserLoc) {
         var targetLatitude = userData["lokasi"]["latitude"];
         var targetLongitude = userData["lokasi"]["longitude"];
@@ -120,27 +122,38 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
         var result = await http.get(Uri.parse(url));
         var res = json.decode(result.body)['routes'];
 
-        var routes = [];
+        // final lengthInMeters = res[0]["summary"]["lengthInMeters"];
 
-        for (var e in res) {
-          var points = e["legs"][0]["points"];
-          routes.add(points);
-        }
-
-        var distance = algorithmDijkstra(routes);
-
-        listDatauser.add({
+        listDataFirst.add({
           "nama": userData["nama"],
-          "jenis_laporan": userData["jenis_laporan"],
-          "tanggal": userData["tanggal"],
-          "lokasi": LatLng(targetLatitude, targetLongitude),
-          "jarak": distance
+          "location": userData["lokasi"],
+          // "lengthInMeters": lengthInMeters
         });
+        // var routes = [];
+
+        // for (var e in res) {
+        //   var points = e["legs"][0]["points"];
+        //   routes.add(points);
+        // }
+        // logO(routes);
+        // var distance = algorithmDijkstra(res);
+
+        // listDatauser.add({
+        //   "nama": userData["nama"],
+        //   "jenis_laporan": userData["jenis_laporan"],
+        //   "tanggal": userData["tanggal"],
+        //   "lokasi": LatLng(targetLatitude, targetLongitude),
+        //   "jarak": distance
+        // });
       }
 
-      setState(() {
-        userData = listDatauser;
-      });
+      // logO(listDataFirst);
+
+      final distance = algorithmDijkstra(position, listDataFirst);
+
+      // setState(() {
+      //   userData = listDatauser;
+      // });
     } catch (e) {
       showToast(e);
       logO("e", m: e);
@@ -205,7 +218,6 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                       // )
                     ],
                   ),
-                  V(10),
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(

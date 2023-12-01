@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:geolocator/geolocator.dart';
 
 import 'output_utils.dart';
 
@@ -9,102 +10,94 @@ class Point {
   Point(this.latitude, this.longitude);
 }
 
-class Dijkstra {
-  final List<Point> nodes;
-  final Map<Point, Map<Point, double>> edges;
-  late final Map<Point, Point?> previous;
+double algorithmDijkstra(Position positionFirst, List<dynamic> routes) {
+  List<Map<String, double>> locationUser = [
+    {
+      "latitude": positionFirst.latitude,
+      "longitude": positionFirst.longitude,
+    }
+  ];
 
-  Dijkstra(this.nodes, this.edges) {
-    previous =
-        Map<Point, Point?>.fromIterables(nodes, List.generate(nodes.length, (index) => null));
+  // Populate locationUser with route locations
+  locationUser.addAll(routes
+      .where((route) => route["location"] != null)
+      .map((route) => route["location"].cast<String, double>()));
+
+  List<int> posT = [
+    0,
+  ];
+  double totalDistance = 0;
+
+  int pos = 0;
+
+  for (var i = 1; i < locationUser.length; i++) {
+    var distances = calculateShortestDistances(locationUser, pos);
+
+    // Find the nearest unvisited location
+    var nearest = findNearest(distances, posT);
+    // if (i == 2) break;
+
+    // Update the current position and add it to the visited locations
+    pos = nearest;
+    posT.add(pos);
+
+    // Add the distance to the total distance
+    totalDistance += distances[pos]!;
+    logO("distances", m: distances);
   }
 
-  Map<Point, double> findShortestPath(Point start) {
-    var distances = <Point, double>{};
+  // logO("Total Distance: $totalDistance");
+  return totalDistance;
+}
 
-    nodes.forEach((node) {
-      distances[node] = double.infinity;
-    });
+Map<int, double> calculateShortestDistances(
+    List<Map<String, double>> locations, int source) {
+  var distances = <int, double>{};
 
-    distances[start] = 0;
+  for (var i = 0; i < locations.length; i++) {
+    distances[i] = double.infinity;
+  }
 
-    var unvisitedNodes = List.from(nodes);
+  distances[source] = 0;
 
-    while (unvisitedNodes.isNotEmpty) {
-      unvisitedNodes.sort((a, b) => distances[a]!.compareTo(distances[b]!));
-      var closest = unvisitedNodes.removeAt(0);
+  for (var i = 0; i < locations.length; i++) {
+    for (var j = 0; j < locations.length; j++) {
+      if (i != j &&
+          locations[j]["latitude"] != null &&
+          locations[j]["longitude"] != null) {
+        var latUi = locations[i]["latitude"]!;
+        var lotUi = locations[i]["longitude"]!;
+        var latUj = locations[j]["latitude"]!;
+        var lotUj = locations[j]["longitude"]!;
 
-      if (distances[closest] == double.infinity) {
-        break;
-      }
+        var jarakpath =
+            calculateDistance(Point(latUi, lotUi), Point(latUj, lotUj));
 
-      for (var neighbor in edges[closest]!.keys) {
-        var distance = distances[closest]! + edges[closest]![neighbor]!;
-        if (distance < distances[neighbor]!) {
-          distances[neighbor] = distance;
-          previous[neighbor] = closest;
+        if (distances[j]! > distances[i]! + jarakpath) {
+          distances[j] = (distances[i]! + jarakpath);
         }
       }
     }
-
-    return distances;
   }
 
-  List<Point> shortestPath(Point start, Point end) {
-    var distances = findShortestPath(start);
-    var path = <Point>[];
-    Point? current = end;
-
-    while (current != null) {
-      path.insert(0, current);
-      current = previous[current];
-    }
-
-    return path;
-  }
+  return distances;
 }
 
-double algorithmDijkstra(routes) {
-  double distance = 0;
-  for (final route in routes) {
-    var edges = <Point, Map<Point, double>>{};
-    List<Point> point = [];
+int findNearest(Map<int, double> distances, List<int> visited) {
+  var minValue = double.infinity;
+  var minIndex = -1;
 
-    for (final r in route) {
-      point.add(Point(r["latitude"], r["longitude"]));
+  for (var i = 0; i < distances.length; i++) {
+    if (!visited.contains(i) && distances[i]! < minValue) {
+      minValue = distances[i]!;
+      minIndex = i;
     }
-
-    // Fill in the edges map with distances between points
-    for (var i = 0; i < point.length; i++) {
-      edges[point[i]] = {};
-
-      for (var j = 0; j < point.length; j++) {
-        if (i != j) {
-          var distance = calculateDistance(point[i], point[j]);
-          edges[point[i]]![point[j]] = distance;
-        }
-      }
-    }
-
-    var dijkstra = Dijkstra(point, edges);
-
-    var start = point[0];
-    var end = point[point.length - 1];
-
-    var shortestDistance = dijkstra.findShortestPath(start)[end];
-    // var shortestPath = dijkstra.shortestPath(start, end);
-
-    logO("Shortest Distance", m: shortestDistance);
-
-    distance = shortestDistance!;
-    // logO('Shortest Path:');
-    // shortestPath.forEach((point) {
-    //   logO('Latitude: ${point.latitude}, Longitude: ${point.longitude}');
-    // });
   }
 
-  return distance;
+  return minIndex;
 }
+
+// Rest of your code...
 
 double calculateDistance(Point a, Point b) {
   var earthRadius = 6371; // in kilometers
@@ -113,7 +106,8 @@ double calculateDistance(Point a, Point b) {
   var lat1 = degreesToRadians(a.latitude);
   var lat2 = degreesToRadians(b.latitude);
 
-  var haversine = pow(sin(dLat / 2), 2) + pow(sin(dLon / 2), 2) * cos(lat1) * cos(lat2);
+  var haversine =
+      pow(sin(dLat / 2), 2) + pow(sin(dLon / 2), 2) * cos(lat1) * cos(lat2);
   var c = 2 * atan2(sqrt(haversine), sqrt(1 - haversine));
 
   return earthRadius * c;
