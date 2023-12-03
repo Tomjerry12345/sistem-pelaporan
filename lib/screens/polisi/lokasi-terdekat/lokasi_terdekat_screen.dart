@@ -33,6 +33,10 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
 
   final fs = FirebaseServices();
 
+  var directionSelected = [];
+  LatLng? locationSelected;
+  LatLng? myLocation;
+
   @override
   void initState() {
     super.initState();
@@ -76,17 +80,25 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       getDistance(position);
+      setState(() {
+        myLocation = LatLng(position.latitude, position.longitude);
+      });
     }).catchError((e) {
       logO("e", m: e);
     });
-    positionStream();
+
+    if (locationSelected != null) positionStream();
   }
 
   StreamSubscription<Position> positionStream() {
     return Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position? position) {
       if (position != null) {
-        getDistance(position);
+        setDirectionLine(
+            LatLng(position.latitude, position.longitude), locationSelected!);
+        setState(() {
+          myLocation = LatLng(position.latitude, position.longitude);
+        });
       }
 
       logO("position",
@@ -113,63 +125,86 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
       final listDataFirst = [];
 
       for (var userData in listUserLoc) {
-        var targetLatitude = userData["lokasi"]["latitude"];
-        var targetLongitude = userData["lokasi"]["longitude"];
-
-        var url =
-            "https://api.tomtom.com/routing/1/calculateRoute/${position.latitude},${position.longitude}:$targetLatitude,$targetLongitude/json?key=$apiKey&maxAlternatives=0";
-
-        var result = await http.get(Uri.parse(url));
-        var res = json.decode(result.body)['routes'];
-
-        // final lengthInMeters = res[0]["summary"]["lengthInMeters"];
-
         listDataFirst.add({
           "nama": userData["nama"],
           "location": userData["lokasi"],
-          // "lengthInMeters": lengthInMeters
         });
-        // var routes = [];
-
-        // for (var e in res) {
-        //   var points = e["legs"][0]["points"];
-        //   routes.add(points);
-        // }
-        // logO(routes);
-        // var distance = algorithmDijkstra(res);
-
-        // listDatauser.add({
-        //   "nama": userData["nama"],
-        //   "jenis_laporan": userData["jenis_laporan"],
-        //   "tanggal": userData["tanggal"],
-        //   "lokasi": LatLng(targetLatitude, targetLongitude),
-        //   "jarak": distance
-        // });
       }
 
-      // logO(listDataFirst);
+      final result = algorithmDijkstra(position, listDataFirst);
 
-      final distance = algorithmDijkstra(position, listDataFirst);
+      for (final keyResult in result.keys) {
+        for (var userData in listUserLoc) {
+          if (result[keyResult]!["latitude"] ==
+              userData["lokasi"]["latitude"]) {
+            listDatauser.add({
+              "nama": keyResult,
+              "jenis_laporan": userData["jenis_laporan"],
+              "tanggal": userData["tanggal"],
+              "lokasi": LatLng(result[keyResult]!["latitude"],
+                  result[keyResult]!["longitude"]),
+              "jarak": result[keyResult]!["distance"]
+            });
+          }
+        }
+      }
 
-      // setState(() {
-      //   userData = listDatauser;
-      // });
+      setState(() {
+        userData = listDatauser;
+      });
     } catch (e) {
       showToast(e);
       logO("e", m: e);
     }
   }
 
+  Future<void> setDirectionLine(LatLng lokasiAwal, LatLng lokasiTujuan) async {
+    var url =
+        "https://api.tomtom.com/routing/1/calculateRoute/${lokasiAwal.latitude},${lokasiAwal.longitude}:${lokasiTujuan.latitude},${lokasiTujuan.longitude}/json?key=$apiKey&maxAlternatives=0";
+
+    var result = await http.get(Uri.parse(url));
+    var res = json.decode(result.body)['routes'];
+
+    var routes = [];
+
+    for (var e in res) {
+      var points = e["legs"][0]["points"];
+      routes = points;
+    }
+
+    setState(() {
+      directionSelected = routes;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     const padding = 50.0;
 
+    print(myLocation);
     return Scaffold(
         body: userData != null
             ? Stack(
                 children: [
                   FlutterMap(
                     options: MapOptions(
+                      // center:
+                      //     myLocation != null ? myLocation : LatLng(0.0, 0.0),
+                      // zoom: 17.0,
+                      // bounds: directionSelected.isNotEmpty
+                      //     ? LatLngBounds.fromPoints(directionSelected
+                      //         .map((e) => LatLng(e["latitude"], e["longitude"]))
+                      //         .toList())
+                      //     : null,
+                      // boundsOptions: FitBoundsOptions(
+                      //   padding: EdgeInsets.only(
+                      //     left: padding,
+                      //     top: padding + MediaQuery.of(context).padding.top,
+                      //     right: padding,
+                      //     bottom: padding,
+                      //   ),
+                      // ),
+
                       bounds: LatLngBounds.fromPoints(userData!
                           .map((uData) => uData["lokasi"] as LatLng)
                           .toList()),
@@ -203,19 +238,22 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                                 ),
                             anchorPos: AnchorPos.align(AnchorAlign.top));
                       }).toList()),
-                      // PolylineLayer(
-                      //   polylines: [
-                      //     Polyline(
-                      //       points: listRoute
-                      //           .map((e) => LatLng(2, 2))
-                      //           .toList(),
-                      //       strokeJoin: StrokeJoin.round,
-                      //       borderStrokeWidth: _defaultStrokeWidth,
-                      //       color: _defaultColor,
-                      //       borderColor: _defaultColor,
-                      //     )
-                      //   ],
-                      // )
+                      directionSelected.isNotEmpty
+                          ? PolylineLayer(
+                              polylines: [
+                                Polyline(
+                                  points: directionSelected
+                                      .map((e) =>
+                                          LatLng(e["latitude"], e["longitude"]))
+                                      .toList(),
+                                  strokeJoin: StrokeJoin.round,
+                                  borderStrokeWidth: 1,
+                                  color: Colors.red,
+                                  borderColor: Colors.red,
+                                )
+                              ],
+                            )
+                          : Container()
                     ],
                   ),
                   Align(
@@ -233,7 +271,17 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                             return Card(
                               color: Colors.white,
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  LatLng lokasiAwal = userData![0]["lokasi"];
+                                  LatLng lokasiTujuan = value["lokasi"];
+
+                                  setDirectionLine(lokasiAwal, lokasiTujuan);
+
+                                  setState(() {
+                                    myLocation = lokasiAwal;
+                                    locationSelected = lokasiTujuan;
+                                  });
+                                },
                                 child: ListTile(
                                   leading: CircleAvatar(child: Text("A")),
                                   title: Text(value["nama"]),
