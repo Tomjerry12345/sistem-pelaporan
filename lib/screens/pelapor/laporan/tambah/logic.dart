@@ -123,7 +123,8 @@ class Logic {
         "type_file": typeFile,
         "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}",
         "konfirmasi_polisi": false,
-        "notifikasi": false
+        "notifikasi": false,
+        "created": getTimeNow().millisecondsSinceEpoch
       };
 
       fs.addDataCollection("laporan", req);

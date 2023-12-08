@@ -251,11 +251,14 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                       //           ),
                       //       anchorPos: AnchorPos.align(AnchorAlign.top));
                       // }).toList()),
-                      MarkerLayer(markers: [
-                        MarkerComponent(myLocation!, iconColor: Colors.blue),
-                        MarkerComponent(locationSelected!,
-                            iconColor: Colors.red),
-                      ]),
+                      myLocation != null && locationSelected != null
+                          ? MarkerLayer(markers: [
+                              MarkerComponent(myLocation!,
+                                  iconColor: Colors.blue),
+                              MarkerComponent(locationSelected!,
+                                  iconColor: Colors.red),
+                            ])
+                          : MarkerLayer(),
                       directionSelected.isNotEmpty
                           ? PolylineLayer(
                               polylines: [
@@ -314,7 +317,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                                         TextComponent(
                                             jarak >= 1
                                                 ? "${jarak.toStringAsFixed(2)} km"
-                                                : "${jarak * 1000} m",
+                                                : "${(jarak * 1000).toStringAsFixed(2)} m",
                                             size: 16),
                                       ]),
                                   // trailing: Icon(Icons.arrow_right),

@@ -40,29 +40,16 @@ class FirebaseServices {
           String collection, String doc) =>
       _db.collection(collection).doc(doc).snapshots();
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getDataQueryStream(
-      String collection, List<Map> query,
-      {String orderBy = ""}) {
-    CollectionReference<Map<String, dynamic>> col = _db.collection(collection);
+  Stream<QuerySnapshot<Map<String, dynamic>>>? getDataQueryStream(
+      String collection, List<Map> query) {
+    Query<Map<String, dynamic>> queryRef = _db.collection(collection);
 
-    query.forEach((e) {
-      col.where(e["key"], isEqualTo: e["value"]);
-    });
-    final snap = orderBy == "" ? col : col.orderBy(orderBy);
-    return snap.snapshots();
+    for (var q in query) {
+      queryRef = queryRef.where(q["key"], isEqualTo: q["value"]);
+    }
+
+    return queryRef.snapshots();
   }
-
-  // Stream<QuerySnapshot<Map<String, dynamic>>> getDataTwoQueryStream(
-  //         String collection,
-  //         String query,
-  //         dynamic value,
-  //         String query1,
-  //         dynamic value1) =>
-  //     _db
-  //         .collection(collection)
-  //         .where(query, isEqualTo: value)
-  //         .where(query1, isEqualTo: value1)
-  //         .snapshots();
 
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getDataCollection(
       String collection) async {

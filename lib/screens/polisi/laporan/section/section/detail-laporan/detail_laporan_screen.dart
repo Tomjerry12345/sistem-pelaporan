@@ -120,7 +120,8 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
                       ],
                     ),
                     V(24),
-                    TextComponent("No telepon: ${widget.data["no_telepon"]}"),
+                    TextComponent("telepon: ${widget.data["no_telepon"]}",
+                        size: 14),
                     V(24),
                     SingleChildScrollView(
                       child: Container(
