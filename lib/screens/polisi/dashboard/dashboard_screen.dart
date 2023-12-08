@@ -3,8 +3,6 @@ import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/screens/polisi/laporan/laporan_screen.dart';
 import 'package:sistem_pelaporan/screens/polisi/lokasi-terdekat/lokasi_terdekat_screen.dart';
-import 'package:sistem_pelaporan/screens/pelapor/laporan/tambah/tambah_laporan_screen.dart';
-import 'package:sistem_pelaporan/screens/pelapor/titik_rawan/titik_rawan_screen.dart';
 import 'package:sistem_pelaporan/values/font_custom.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
@@ -51,6 +49,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   V(16),
                   ButtonElevatedComponent(
                     "Lokasi kejadian terdekat",
+                    onPressed: () {
+                      navigatePush(LokasiTerdekatScreen());
+                    },
+                    w: 0.6.w,
+                  ),
+                  V(16),
+                  ButtonElevatedComponent(
+                    "Histori",
                     onPressed: () {
                       navigatePush(LokasiTerdekatScreen());
                     },

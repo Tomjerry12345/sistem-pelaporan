@@ -38,11 +38,12 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
   void initState() {
     super.initState();
     if (widget.data["type_file"] == "video") {
-      _controller = VideoPlayerController.networkUrl(Uri.parse(widget.data["file"]))
-        ..initialize().then((_) {
-          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-          setState(() {});
-        });
+      _controller =
+          VideoPlayerController.networkUrl(Uri.parse(widget.data["file"]))
+            ..initialize().then((_) {
+              // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+              setState(() {});
+            });
     }
   }
 
@@ -119,6 +120,8 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
                       ],
                     ),
                     V(24),
+                    TextComponent("No telepon: ${widget.data["no_telepon"]}"),
+                    V(24),
                     SingleChildScrollView(
                       child: Container(
                         height: isFullScroll
@@ -156,8 +159,9 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
                     widget.data["type_file"] == "video"
                         ? Center(
                             child: ButtonElevatedComponent(
-                                _controller.value.isPlaying ? "Pause video" : "Play video",
-                                onPressed: () {
+                                _controller.value.isPlaying
+                                    ? "Pause video"
+                                    : "Play video", onPressed: () {
                               setState(() {
                                 _controller.value.isPlaying
                                     ? _controller.pause()
@@ -169,16 +173,19 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
                     isFullScroll ? V(16) : V(0.04.h),
                     Expanded(
                       child: Align(
-                        alignment: isFullScroll ? Alignment.bottomCenter : Alignment.topCenter,
+                        alignment: isFullScroll
+                            ? Alignment.bottomCenter
+                            : Alignment.topCenter,
                         child: Container(
                             width: double.infinity,
-                            child:
-                                ButtonElevatedComponent("Verifikasi laporan", onPressed: () async {
+                            child: ButtonElevatedComponent("Verifikasi laporan",
+                                onPressed: () async {
                               try {
                                 showLoaderDialog();
                                 await fs.updateDataSpecifictDoc(
                                     "laporan", widget.id, {"type": "keluar"});
-                                navigatePush(const LaporanScreen(), isRemove: true);
+                                navigatePush(const LaporanScreen(),
+                                    isRemove: true);
                               } catch (e) {
                                 showToast(e);
                                 closeDialog();

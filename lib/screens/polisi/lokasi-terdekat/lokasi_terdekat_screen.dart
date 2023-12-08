@@ -177,6 +177,19 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
     });
   }
 
+  Marker MarkerComponent(LatLng location, {Color iconColor = Colors.red}) {
+    return Marker(
+        point: location,
+        width: 35,
+        height: 35,
+        builder: (context) => Icon(
+              Icons.location_pin,
+              color: iconColor,
+              size: 24,
+            ),
+        anchorPos: AnchorPos.align(AnchorAlign.top));
+  }
+
   @override
   Widget build(BuildContext context) {
     const padding = 50.0;
@@ -223,21 +236,26 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                         subdomains: ['a', 'b', 'c'],
                       ),
-                      MarkerLayer(
-                          markers: userData!.map((uData) {
-                        int idx = userData!.indexOf(uData);
+                      // MarkerLayer(
+                      //     markers: userData!.map((uData) {
+                      //   int idx = userData!.indexOf(uData);
 
-                        return Marker(
-                            point: uData["lokasi"],
-                            width: 35,
-                            height: 35,
-                            builder: (context) => Icon(
-                                  Icons.location_pin,
-                                  color: idx == 0 ? Colors.blue : Colors.red,
-                                  size: 24,
-                                ),
-                            anchorPos: AnchorPos.align(AnchorAlign.top));
-                      }).toList()),
+                      //   return Marker(
+                      //       point: uData["lokasi"],
+                      //       width: 35,
+                      //       height: 35,
+                      //       builder: (context) => Icon(
+                      //             Icons.location_pin,
+                      //             color: idx == 0 ? Colors.blue : Colors.red,
+                      //             size: 24,
+                      //           ),
+                      //       anchorPos: AnchorPos.align(AnchorAlign.top));
+                      // }).toList()),
+                      MarkerLayer(markers: [
+                        MarkerComponent(myLocation!, iconColor: Colors.blue),
+                        MarkerComponent(locationSelected!,
+                            iconColor: Colors.red),
+                      ]),
                       directionSelected.isNotEmpty
                           ? PolylineLayer(
                               polylines: [
@@ -294,7 +312,9 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                                         Text(value["jenis_laporan"]),
                                         V(8),
                                         TextComponent(
-                                            "${jarak.toStringAsFixed(2)} km",
+                                            jarak >= 1
+                                                ? "${jarak.toStringAsFixed(2)} km"
+                                                : "${jarak * 1000} m",
                                             size: 16),
                                       ]),
                                   // trailing: Icon(Icons.arrow_right),

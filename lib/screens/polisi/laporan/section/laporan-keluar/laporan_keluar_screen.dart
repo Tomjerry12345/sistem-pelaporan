@@ -19,7 +19,9 @@ class _LaporanKeluarScreenState extends State<LaporanKeluarScreen> {
         body: Padding(
       padding: const EdgeInsets.only(top: 24),
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: fs.getDataQueryStream("laporan", "type", "keluar"),
+          stream: fs.getDataQueryStream("laporan", [
+            {"key": "type", "value": "keluar"}
+          ]),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final data = snapshot.data?.docs;

@@ -28,28 +28,41 @@ class FirebaseServices {
   Future addDataCollection(String collection, Map<String, dynamic> data) =>
       _db.collection(collection).add(data);
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getDataStreamCollection(
-          String collection) =>
-      _db.collection(collection).snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>>? getDataStreamCollection(
+      String collection,
+      {String orderBy = ""}) {
+    CollectionReference<Map<String, dynamic>> col = _db.collection(collection);
+    final snap = orderBy == "" ? col : col.orderBy(orderBy);
+    snap.snapshots();
+  }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> getDataStreamDoc(
           String collection, String doc) =>
       _db.collection(collection).doc(doc).snapshots();
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getDataQueryStream(
-          String collection, String query, dynamic value) =>
-      _db.collection(collection).where(query, isEqualTo: value).snapshots();
-  Stream<QuerySnapshot<Map<String, dynamic>>> getDataTwoQueryStream(
-          String collection,
-          String query,
-          dynamic value,
-          String query1,
-          dynamic value1) =>
-      _db
-          .collection(collection)
-          .where(query, isEqualTo: value)
-          .where(query1, isEqualTo: value1)
-          .snapshots();
+      String collection, List<Map> query,
+      {String orderBy = ""}) {
+    CollectionReference<Map<String, dynamic>> col = _db.collection(collection);
+
+    query.forEach((e) {
+      col.where(e["key"], isEqualTo: e["value"]);
+    });
+    final snap = orderBy == "" ? col : col.orderBy(orderBy);
+    return snap.snapshots();
+  }
+
+  // Stream<QuerySnapshot<Map<String, dynamic>>> getDataTwoQueryStream(
+  //         String collection,
+  //         String query,
+  //         dynamic value,
+  //         String query1,
+  //         dynamic value1) =>
+  //     _db
+  //         .collection(collection)
+  //         .where(query, isEqualTo: value)
+  //         .where(query1, isEqualTo: value1)
+  //         .snapshots();
 
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getDataCollection(
       String collection) async {

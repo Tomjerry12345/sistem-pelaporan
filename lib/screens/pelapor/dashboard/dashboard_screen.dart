@@ -42,7 +42,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             V(48),
             Column(
               children: [
-                Container(width: 0.8.w, child: Image.asset("assets/images/bg_splash.png")),
+                Container(
+                    width: 0.8.w,
+                    child: Image.asset("assets/images/bg_splash.png")),
                 V(48),
                 ButtonElevatedComponent(
                   "Laporkan masalah anda",
@@ -54,6 +56,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 V(16),
                 ButtonElevatedComponent(
                   "Lokasi Rawan Kriminal",
+                  onPressed: () {
+                    l.onMoveTitikRawan();
+                  },
+                  w: 0.6.w,
+                ),
+                V(16),
+                ButtonElevatedComponent(
+                  "Histori",
                   onPressed: () {
                     l.onMoveTitikRawan();
                   },

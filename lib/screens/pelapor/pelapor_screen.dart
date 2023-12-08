@@ -26,7 +26,9 @@ class _PelaporScreenState extends State<PelaporScreen> {
     final user = fs.getUser();
 
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: fs.getDataQueryStream("laporan", "email", user?.email),
+        stream: fs.getDataQueryStream("laporan", [
+          {"key": "email", "value": user?.email}
+        ]),
         builder: (context, snapshot) {
           final data = snapshot.data!.docs;
 
