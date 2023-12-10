@@ -29,11 +29,9 @@ class FirebaseServices {
       _db.collection(collection).add(data);
 
   Stream<QuerySnapshot<Map<String, dynamic>>>? getDataStreamCollection(
-      String collection,
-      {String orderBy = ""}) {
+      String collection) {
     CollectionReference<Map<String, dynamic>> col = _db.collection(collection);
-    final snap = orderBy == "" ? col : col.orderBy(orderBy);
-    snap.snapshots();
+    return col.snapshots();
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> getDataStreamDoc(

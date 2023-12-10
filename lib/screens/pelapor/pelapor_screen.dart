@@ -33,22 +33,18 @@ class _PelaporScreenState extends State<PelaporScreen> {
           final data = snapshot.data!.docs;
 
           if (data.length > 0) {
-            bool showNotif = false;
             data.forEach((e) async {
               if (e["notifikasi"]) {
-                showNotif = true;
-                await fs.updateDataSpecifictDoc(
-                    "laporan", e.id, {"notifikasi": false});
+                await fs.updateDataSpecifictDoc("laporan", e.id,
+                    {"notifikasi": false, "message_notif": null});
+
+                NotificationServices.showNotification(
+                    id: 1,
+                    title: "Pemberitahuan",
+                    body: e["message_notif"],
+                    payload: "test");
               }
             });
-
-            if (showNotif) {
-              NotificationServices.showNotification(
-                  id: 1,
-                  title: "Pemberitahuan",
-                  body: "Polisi segera ke sana",
-                  payload: "test");
-            }
           }
 
           return Scaffold(

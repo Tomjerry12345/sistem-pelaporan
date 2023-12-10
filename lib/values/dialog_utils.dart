@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sistem_pelaporan/components/button/button_component.dart';
+import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/models/item_menu_dialog.dart';
 
 Widget menuDialog(context, List<ItemMenuDialog> listMenu) {
@@ -17,11 +19,19 @@ Widget menuDialog(context, List<ItemMenuDialog> listMenu) {
           .toList());
 }
 
-Future<void> dialogShow({context, widget}) async {
+Future<void> dialogShow({context, title, content, actions}) async {
   await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return widget;
+        return AlertDialog(
+          title: TextComponent(
+            title,
+            size: 18,
+            weight: FontWeight.w600,
+          ),
+          content: content,
+          actions: actions,
+        );
       });
 }
 

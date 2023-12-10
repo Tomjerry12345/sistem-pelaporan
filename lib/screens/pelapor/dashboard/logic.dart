@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:geolocator/geolocator.dart';
+import 'package:sistem_pelaporan/screens/pelapor/histori/histori_pelapor_screen.dart';
 import 'package:sistem_pelaporan/screens/pelapor/laporan/tambah/tambah_laporan_screen.dart';
 import 'package:sistem_pelaporan/screens/pelapor/titik_rawan/titik_rawan_screen.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
@@ -35,5 +36,9 @@ class Logic {
 
   void onMoveTitikRawan() {
     navigatePush(const TitikRawanScreen());
+  }
+
+  void onMoveHistori() {
+    navigatePush(const HistoriPelaporScreen());
   }
 }

@@ -20,6 +20,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   final double sizeTitle;
   final String textBadge;
   final int? maxLinesTitle;
+  final double height;
 
   const AppBarComponent(
       {super.key,
@@ -34,7 +35,8 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
       this.fg = Colors.black,
       this.sizeTitle = 24,
       this.textBadge = "0",
-      this.maxLinesTitle});
+      this.maxLinesTitle,
+      this.height = 150});
 
   Widget titleC() {
     return TextComponent(
@@ -100,7 +102,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: titleC(),
       centerTitle: false,
-      toolbarHeight: 150,
+      toolbarHeight: height,
       backgroundColor: bg,
       leading: leadingWidget(),
       actions: [rightIcon()],
@@ -113,5 +115,5 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(150);
+  Size get preferredSize => Size.fromHeight(height);
 }

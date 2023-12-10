@@ -8,6 +8,9 @@ class TextfieldComponent extends StatelessWidget {
   final TextInputType inputType;
   final String label;
   final bool enabled;
+  final double? size;
+  final int? maxLines;
+  final TextAlignVertical? textAlignVertical;
 
   const TextfieldComponent(
       {super.key,
@@ -16,16 +19,23 @@ class TextfieldComponent extends StatelessWidget {
       this.controller,
       this.color = Colors.white70,
       this.inputType = TextInputType.text,
-      this.label = "", this.enabled = true});
+      this.label = "",
+      this.enabled = true,
+      this.size,
+      this.maxLines,
+      this.textAlignVertical});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       enabled: enabled,
+      style: TextStyle(fontSize: size),
+      textAlignVertical: textAlignVertical,
       keyboardType: inputType,
       controller: controller,
       onChanged: onChanged,
       cursorColor: Colors.black,
+      maxLines: maxLines,
       decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),

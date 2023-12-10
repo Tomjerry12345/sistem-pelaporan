@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
+import 'package:sistem_pelaporan/screens/polisi/histori/histori_polisi_screen.dart';
 import 'package:sistem_pelaporan/screens/polisi/laporan/laporan_screen.dart';
 import 'package:sistem_pelaporan/screens/polisi/lokasi-terdekat/lokasi_terdekat_screen.dart';
 import 'package:sistem_pelaporan/values/font_custom.dart';
@@ -58,7 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ButtonElevatedComponent(
                     "Histori",
                     onPressed: () {
-                      navigatePush(LokasiTerdekatScreen());
+                      navigatePush(HistoriPolisiScreen());
                     },
                     w: 0.6.w,
                   )

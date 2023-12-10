@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/button/popup_button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
+import 'package:sistem_pelaporan/components/textfield/textfield_component.dart';
 import 'package:sistem_pelaporan/screens/polisi/laporan/section/section/detail-laporan/detail_laporan_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/date_utils.dart';
+import 'package:sistem_pelaporan/values/dialog_utils.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';
+import 'package:sistem_pelaporan/values/position_utils.dart';
 
 class AllLaporanScreen extends StatefulWidget {
   const AllLaporanScreen({super.key});
@@ -18,6 +22,8 @@ class AllLaporanScreen extends StatefulWidget {
 class _AllLaporanScreenState extends State<AllLaporanScreen> {
   final fs = FirebaseServices();
   final date = formatDate(getTimeNow());
+
+  final txtAlasanController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,45 +73,50 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                           subtitle: Text(value["jenis_laporan"]),
                           trailing:
                               Row(mainAxisSize: MainAxisSize.min, children: [
-                            // !value["konfirmasi_polisi"]
-                            //     ? ButtonElevatedComponent(
-                            //         "segera ke sana",
-                            //         w: 104,
-                            //         size: 10,
-                            //         onPressed: () async {
-                            //           await fs.updateDataSpecifictDoc(
-                            //               "laporan", id, {
-                            //             "notifikasi": true,
-                            //             "konfirmasi_polisi": true
-                            //           });
-                            //         },
-                            //       )
-                            //     : Container(),
                             PopupButtonComponent(
                               icon: Icons.notifications,
-                              onSelected: (value) {
-                                print(value);
+                              onSelected: (value) async {
+                                await fs.updateDataSpecifictDoc("laporan", id, {
+                                  "notifikasi": true,
+                                  "message_notif": value
+                                });
+                                showSnackbar("Mengirim notifikasi ke pelapor");
                               },
                               items: ["Segera ke lokasi", "Sampai ke lokasi"],
                             ),
-
-                            // ButtonElevatedComponent(
-                            //   "Tolak laporan",
-                            //   w: 104,
-                            //   size: 10,
-                            //   bg: Colors.red,
-                            //   onPressed: () async {
-                            //     await fs.updateDataSpecifictDoc("laporan", id, {
-                            //       "notifikasi": true,
-                            //       "konfirmasi_polisi": true
-                            //     });
-                            //   },
-                            // ),
-                            // H(8),
                             IconButton(
                               icon: Icon(Icons.do_not_disturb),
                               color: Colors.red,
-                              onPressed: () {},
+                              onPressed: () async {
+                                await dialogShow(
+                                    context: context,
+                                    title: "Alasan Menolak",
+                                    content: Container(
+                                      width: 100,
+                                      child: TextfieldComponent(
+                                        controller: txtAlasanController,
+                                        size: 14,
+                                        maxLines: 4,
+                                      ),
+                                    ),
+                                    actions: [
+                                      ButtonElevatedComponent("Kirim",
+                                          size: 14,
+                                          h: 48,
+                                          w: 80, onPressed: () async {
+                                        await fs.updateDataSpecifictDoc(
+                                            "laporan", id, {
+                                          "konfirmasi_polisi": false,
+                                          "message_tolak":
+                                              txtAlasanController.text
+                                        });
+                                        setState(() {
+                                          txtAlasanController.text = "";
+                                        });
+                                        dialogClose(context);
+                                      })
+                                    ]);
+                              },
                             )
                           ]),
                         ),

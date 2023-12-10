@@ -65,7 +65,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ButtonElevatedComponent(
                   "Histori",
                   onPressed: () {
-                    l.onMoveTitikRawan();
+                    l.onMoveHistori();
                   },
                   w: 0.6.w,
                 )
