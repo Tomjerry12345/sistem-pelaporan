@@ -84,6 +84,7 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                               },
                               items: ["Segera ke lokasi", "Sampai ke lokasi"],
                             ),
+	                      value["konfirmasi"] ?
                             IconButton(
                               icon: Icon(Icons.do_not_disturb),
                               color: Colors.red,
@@ -106,7 +107,7 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                                           w: 80, onPressed: () async {
                                         await fs.updateDataSpecifictDoc(
                                             "laporan", id, {
-                                          "konfirmasi_polisi": false,
+                                          "konfirmasi": false,
                                           "message_tolak":
                                               txtAlasanController.text
                                         });
@@ -117,7 +118,7 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                                       })
                                     ]);
                               },
-                            )
+                            ) : Container()
                           ]),
                         ),
                       ),

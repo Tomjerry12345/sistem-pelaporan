@@ -122,7 +122,7 @@ class Logic {
         "lokasi": {"latitude": latitude, "longitude": longitude},
         "type_file": typeFile,
         "tanggal": "${date["month"]}, ${date["day"]} ${date["year"]}",
-        "konfirmasi_polisi": true,
+        "konfirmasi": true,
         "notifikasi": false,
         "created": getTimeNow().millisecondsSinceEpoch
       };

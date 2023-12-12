@@ -88,7 +88,7 @@ class _HistoriPelaporScreenState extends State<HistoriPelaporScreen> {
                                     weight: FontWeight.normal,
                                   ),
                                   V(8),
-                                  !value["konfirmasi_polisi"]
+                                  !value["konfirmasi"]
                                       ? TextComponent(
                                           value["message_tolak"],
                                           size: 14,
@@ -97,7 +97,7 @@ class _HistoriPelaporScreenState extends State<HistoriPelaporScreen> {
                                       : Container(),
                                 ],
                               ),
-                              trailing: !value["konfirmasi_polisi"]
+                              trailing: !value["konfirmasi"]
                                   ? TextComponent(
                                       "Di tolak",
                                       size: 14,

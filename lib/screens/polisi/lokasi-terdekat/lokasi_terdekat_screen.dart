@@ -149,6 +149,8 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
         }
       }
 
+      logO("listDatauser", m: listDatauser);
+
       setState(() {
         userData = listDatauser;
       });
@@ -251,12 +253,15 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                       //           ),
                       //       anchorPos: AnchorPos.align(AnchorAlign.top));
                       // }).toList()),
-                      myLocation != null && locationSelected != null
+                      myLocation != null
                           ? MarkerLayer(markers: [
                               MarkerComponent(myLocation!,
                                   iconColor: Colors.blue),
-                              MarkerComponent(locationSelected!,
-                                  iconColor: Colors.red),
+                              locationSelected != null
+                                  ? MarkerComponent(locationSelected!,
+                                      iconColor: Colors.red)
+                                  : MarkerComponent(myLocation!,
+                                      iconColor: Colors.blue),
                             ])
                           : MarkerLayer(),
                       directionSelected.isNotEmpty
@@ -315,9 +320,9 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                                         Text(value["jenis_laporan"]),
                                         V(8),
                                         TextComponent(
-                                            jarak >= 1
-                                                ? "${jarak.toStringAsFixed(2)} km"
-                                                : "${(jarak * 1000).toStringAsFixed(2)} m",
+                                            jarak <= 1000
+                                                ? "${jarak.toStringAsFixed(2)} m"
+                                                : "${(jarak / 1000).toStringAsFixed(2)} km",
                                             size: 16),
                                       ]),
                                   // trailing: Icon(Icons.arrow_right),

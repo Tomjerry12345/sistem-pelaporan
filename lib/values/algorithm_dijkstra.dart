@@ -46,11 +46,34 @@ class Graph {
     }
   }
 
+  // double calculateDistance(Node node1, Node node2) {
+  //   // Hitung jarak Euclidean antara dua node berdasarkan koordinat mereka
+  //   final dx = node1.latitude - node2.latitude;
+  //   final dy = node1.longitude - node2.longitude;
+  //   return sqrt(dx * dx + dy * dy);
+  // }
+
+  double degreesToRadians(double degrees) {
+    return degrees * (pi / 180);
+  }
+
   double calculateDistance(Node node1, Node node2) {
-    // Hitung jarak Euclidean antara dua node berdasarkan koordinat mereka
-    final dx = node1.latitude - node2.latitude;
-    final dy = node1.longitude - node2.longitude;
-    return sqrt(dx * dx + dy * dy);
+    const earthRadius = 6371000; // radius bumi dalam meter
+    final lat1 = degreesToRadians(node1.latitude);
+    final lon1 = degreesToRadians(node1.longitude);
+    final lat2 = degreesToRadians(node2.latitude);
+    final lon2 = degreesToRadians(node2.longitude);
+
+    final dLat = lat2 - lat1;
+    final dLon = lon2 - lon1;
+
+    final a =
+        pow(sin(dLat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dLon / 2), 2);
+
+    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    final distance = earthRadius * c;
+
+    return distance; // jarak dalam meter
   }
 
   Map<String, Map<String, dynamic>> shortestPath(Node startNode) {
