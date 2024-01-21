@@ -81,10 +81,10 @@ class Logic {
       double latitude = position.latitude;
       double longitude = position.longitude;
 
-      print('Latitude: $latitude, Longitude: $longitude');
+      logO('Latitude: $latitude, Longitude: $longitude');
       processingAdd(latitude, longitude);
     } catch (e) {
-      print('Error: $e');
+      logO('Error: $e');
     }
   }
 

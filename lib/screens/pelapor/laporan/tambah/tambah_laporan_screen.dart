@@ -83,12 +83,12 @@ class _TambahLaporanScreenState extends State<TambahLaporanScreen> {
                 V(32),
                 Center(
                   child: l.loadingImage
-                      ? CircularProgressIndicator()
+                      ? const CircularProgressIndicator()
                       : l.file != null
                           ? Wrap(
                               direction: Axis.vertical,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 250,
                                   child: TextComponent(
                                     getNameFile(l.file!),

@@ -22,9 +22,9 @@ class Dijkstra {
   Map<Point, double> findShortestPath(Point start) {
     var distances = <Point, double>{};
 
-    nodes.forEach((node) {
+    for (var node in nodes) {
       distances[node] = double.infinity;
-    });
+    }
 
     distances[start] = 0;
 
@@ -51,7 +51,6 @@ class Dijkstra {
   }
 
   List<Point> shortestPath(Point start, Point end) {
-    var distances = findShortestPath(start);
     var path = <Point>[];
     Point? current = end;
 

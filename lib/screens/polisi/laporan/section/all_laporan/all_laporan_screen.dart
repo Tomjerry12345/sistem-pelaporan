@@ -4,13 +4,12 @@ import 'package:sistem_pelaporan/components/button/button_component.dart';
 import 'package:sistem_pelaporan/components/button/popup_button_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
 import 'package:sistem_pelaporan/components/textfield/textfield_component.dart';
-import 'package:sistem_pelaporan/screens/polisi/laporan/section/section/detail-laporan/detail_laporan_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/globals/detail-laporan/detail_laporan_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/date_utils.dart';
 import 'package:sistem_pelaporan/values/dialog_utils.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';
-import 'package:sistem_pelaporan/values/position_utils.dart';
 
 class AllLaporanScreen extends StatefulWidget {
   const AllLaporanScreen({super.key});
@@ -54,9 +53,8 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                   itemBuilder: (ctx, i) {
                     final id = data[i].id;
                     final value = data[i].data();
-                    logO(value);
                     return Card(
-                      color: Color.fromRGBO(239, 239, 239, 1),
+                      color: const Color.fromRGBO(239, 239, 239, 1),
                       child: InkWell(
                         onTap: () {
                           navigatePush(
@@ -82,17 +80,17 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                                 });
                                 showSnackbar("Mengirim notifikasi ke pelapor");
                               },
-                              items: ["Segera ke lokasi", "Sampai ke lokasi"],
+                              items: const ["Segera ke lokasi", "Sampai ke lokasi"],
                             ),
 	                      value["konfirmasi"] ?
                             IconButton(
-                              icon: Icon(Icons.do_not_disturb),
+                              icon: const Icon(Icons.do_not_disturb),
                               color: Colors.red,
                               onPressed: () async {
                                 await dialogShow(
                                     context: context,
                                     title: "Alasan Menolak",
-                                    content: Container(
+                                    content: SizedBox(
                                       width: 100,
                                       child: TextfieldComponent(
                                         controller: txtAlasanController,
@@ -114,6 +112,7 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                                         setState(() {
                                           txtAlasanController.text = "";
                                         });
+                                        // ignore: use_build_context_synchronously
                                         dialogClose(context);
                                       })
                                     ]);
@@ -128,12 +127,12 @@ class _AllLaporanScreenState extends State<AllLaporanScreen> {
                 );
               }
 
-              return Center(
+              return const Center(
                 child: TextComponent("Tidak ada laporan"),
               );
             }
 
-            return Center(
+            return const Center(
               child: TextComponent("Tidak ada laporan"),
             );
           }),

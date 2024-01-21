@@ -22,28 +22,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextComponent(
+              const TextComponent(
                 "polisi",
                 size: 18,
                 weight: FW.light,
               ),
               V(8),
-              TextComponent("Dashboard"),
+              const TextComponent("Dashboard"),
               V(48),
               Column(
                 children: [
-                  Container(
+                  SizedBox(
                       width: 0.8.w,
                       child: Image.asset("assets/images/bg_splash.png")),
                   V(48),
                   ButtonElevatedComponent(
                     "Laporan",
                     onPressed: () {
-                      navigatePush(LaporanScreen());
+                      navigatePush(const LaporanScreen());
                     },
                     w: 0.6.w,
                   ),
@@ -51,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ButtonElevatedComponent(
                     "Lokasi kejadian terdekat",
                     onPressed: () {
-                      navigatePush(LokasiTerdekatScreen());
+                      navigatePush(const LokasiTerdekatScreen());
                     },
                     w: 0.6.w,
                   ),
@@ -59,7 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ButtonElevatedComponent(
                     "Histori",
                     onPressed: () {
-                      navigatePush(HistoriPolisiScreen());
+                      navigatePush(const HistoriPolisiScreen());
                     },
                     w: 0.6.w,
                   )

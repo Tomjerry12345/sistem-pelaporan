@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/app-bar/app_bar_component.dart';
 import 'package:sistem_pelaporan/components/text/text_component.dart';
-import 'package:sistem_pelaporan/screens/polisi/laporan/section/section/detail-laporan/detail_laporan_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/globals/detail-laporan/detail_laporan_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';
@@ -22,7 +22,6 @@ class _HistoriPolisiScreenState extends State<HistoriPolisiScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = fs.getUser();
     return Scaffold(
         appBar: AppBarComponent(
             title: "Laporan",
@@ -61,7 +60,7 @@ class _HistoriPolisiScreenState extends State<HistoriPolisiScreen> {
                         final value = data[i].data();
                         logO(value);
                         return Card(
-                          color: Color.fromRGBO(239, 239, 239, 1),
+                          color: const Color.fromRGBO(239, 239, 239, 1),
                           child: InkWell(
                             onTap: () {
                               navigatePush(
@@ -94,12 +93,12 @@ class _HistoriPolisiScreenState extends State<HistoriPolisiScreen> {
                     );
                   }
 
-                  return Center(
+                  return const Center(
                     child: TextComponent("Tidak ada laporan"),
                   );
                 }
 
-                return Center(
+                return const Center(
                   child: TextComponent("Tidak ada laporan"),
                 );
               }),

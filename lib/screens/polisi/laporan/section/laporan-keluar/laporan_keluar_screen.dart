@@ -29,19 +29,19 @@ class _LaporanKeluarScreenState extends State<LaporanKeluarScreen> {
                 itemBuilder: (ctx, i) {
                   final value = data![i].data();
                   return Card(
-                    color: Color.fromRGBO(239, 239, 239, 1),
+                    color: const Color.fromRGBO(239, 239, 239, 1),
                     child: InkWell(
                       onTap: () {
                         // navigatePush(DetailLaporanScreen(data: value, id: id));
                       },
                       child: ListTile(
-                        leading: CircleAvatar(child: Text("A")),
+                        leading: const CircleAvatar(child: Text("A")),
                         title: Text(value["nama"]),
                         subtitle: Text(value["jenis_laporan"]),
                         trailing: Container(
                           color: Colors.green[400],
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: TextComponent(
                               "verifikasi",
                               size: 14,
@@ -57,7 +57,7 @@ class _LaporanKeluarScreenState extends State<LaporanKeluarScreen> {
               );
             }
 
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }),

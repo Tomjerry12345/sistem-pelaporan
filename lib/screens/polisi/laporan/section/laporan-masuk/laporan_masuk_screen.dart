@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sistem_pelaporan/screens/polisi/laporan/section/section/detail-laporan/detail_laporan_screen.dart';
+import 'package:sistem_pelaporan/screens/polisi/globals/detail-laporan/detail_laporan_screen.dart';
 import 'package:sistem_pelaporan/services/firebase_services.dart';
 import 'package:sistem_pelaporan/values/navigate_utils.dart';
 
@@ -29,18 +29,18 @@ class _LaporanMasukScreenState extends State<LaporanMasukScreen> {
               return ListView.builder(
                 itemBuilder: (ctx, i) {
                   final id = data![i].id;
-                  final value = data![i].data();
+                  final value = data[i].data();
                   return Card(
-                    color: Color.fromRGBO(239, 239, 239, 1),
+                    color: const Color.fromRGBO(239, 239, 239, 1),
                     child: InkWell(
                       onTap: () {
                         navigatePush(DetailLaporanScreen(data: value, id: id));
                       },
                       child: ListTile(
-                        leading: CircleAvatar(child: Text("A")),
+                        leading: const CircleAvatar(child: Text("A")),
                         title: Text(value["nama"]),
                         subtitle: Text(value["jenis_laporan"]),
-                        trailing: Icon(Icons.arrow_right),
+                        trailing: const Icon(Icons.arrow_right),
                       ),
                     ),
                   );
@@ -49,7 +49,7 @@ class _LaporanMasukScreenState extends State<LaporanMasukScreen> {
               );
             }
 
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }),

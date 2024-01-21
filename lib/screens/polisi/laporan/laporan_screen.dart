@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sistem_pelaporan/components/app-bar/app_bar_component.dart';
 import 'package:sistem_pelaporan/screens/polisi/laporan/section/all_laporan/all_laporan_screen.dart';
 
-import 'section/laporan-keluar/laporan_keluar_screen.dart';
-import 'section/laporan-masuk/laporan_masuk_screen.dart';
-
 class LaporanScreen extends StatefulWidget {
   const LaporanScreen({super.key});
 

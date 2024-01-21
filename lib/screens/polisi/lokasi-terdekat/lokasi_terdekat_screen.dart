@@ -179,6 +179,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
     });
   }
 
+  // ignore: non_constant_identifier_names
   Marker MarkerComponent(LatLng location, {Color iconColor = Colors.red}) {
     return Marker(
         point: location,
@@ -196,7 +197,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
   Widget build(BuildContext context) {
     const padding = 50.0;
 
-    print(myLocation);
+    logO(myLocation);
     return Scaffold(
         body: userData != null
             ? Stack(
@@ -236,7 +237,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                       TileLayer(
                         urlTemplate:
                             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        subdomains: ['a', 'b', 'c'],
+                        subdomains: const ['a', 'b', 'c'],
                       ),
                       // MarkerLayer(
                       //     markers: userData!.map((uData) {
@@ -263,7 +264,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                                   : MarkerComponent(myLocation!,
                                       iconColor: Colors.blue),
                             ])
-                          : MarkerLayer(),
+                          : const MarkerLayer(),
                       directionSelected.isNotEmpty
                           ? PolylineLayer(
                               polylines: [
@@ -284,7 +285,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
-                    child: Container(
+                    child: SizedBox(
                       height: userData != null
                           ? (userData!.length * 40) + (padding * 2)
                           : 0,
@@ -309,7 +310,7 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
                                   });
                                 },
                                 child: ListTile(
-                                  leading: CircleAvatar(child: Text("A")),
+                                  leading: const CircleAvatar(child: Text("A")),
                                   title: Text(value["nama"]),
                                   subtitle: Column(
                                       mainAxisAlignment:

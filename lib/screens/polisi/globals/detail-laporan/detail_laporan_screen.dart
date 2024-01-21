@@ -9,6 +9,7 @@ import 'package:sistem_pelaporan/values/navigate_utils.dart';
 import 'package:sistem_pelaporan/values/output_utils.dart';
 import 'package:sistem_pelaporan/values/screen_utils.dart';
 import 'package:sistem_pelaporan/values/position_utils.dart';
+import 'package:sistem_pelaporan/values/shared_preferences_utils.dart';
 import 'package:video_player/video_player.dart';
 
 class DetailLaporanScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class DetailLaporanScreen extends StatefulWidget {
 }
 
 class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
+  String? type;
   final fs = FirebaseServices();
   final appBar = const AppBarComponent(
     fg: Colors.white,
@@ -29,10 +31,20 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
     sizeTitle: 18,
   );
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   late VideoPlayerController _controller;
 
   bool isFullScroll = false;
+
+  Future<void> onGetType() async {
+    final type = await SharedPreferencesUtils.get(key: "type");
+
+    logO("type", m: type);
+
+    setState(() {
+      this.type = type;
+    });
+  }
 
   @override
   void initState() {
@@ -45,6 +57,8 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
               setState(() {});
             });
     }
+
+    onGetType();
   }
 
   @override
@@ -55,6 +69,7 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     _scrollController.addListener(() {
       double scrollXPosition = _scrollController.position.pixels;
       if (scrollXPosition >= 167.36) {
@@ -95,7 +110,7 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
               child: Container(
                 height: 1.0.h,
                 width: double.infinity,
-                margin: EdgeInsets.all(16),
+                margin: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -107,7 +122,7 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
                       children: [
                         Row(
                           children: [
-                            Container(
+                            const SizedBox(
                               width: 50,
                               height: 50,
                               child: CircleAvatar(child: Text("A")),
@@ -124,7 +139,7 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
                         size: 14),
                     V(24),
                     SingleChildScrollView(
-                      child: Container(
+                      child: SizedBox(
                         height: isFullScroll
                             ? widget.data["type_file"] == "video"
                                 ? 0.35.h
@@ -141,7 +156,7 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
                     ),
                     isFullScroll ? V(16) : V(0.07.h),
                     Center(
-                      child: Container(
+                      child: SizedBox(
                         width: 300,
                         height: isFullScroll ? 150 : 150,
                         child: widget.data["type_file"] == "image"
@@ -171,29 +186,32 @@ class _DetailLaporanScreenState extends State<DetailLaporanScreen> {
                             }),
                           )
                         : Container(),
-                    isFullScroll ? V(16) : V(0.04.h),
-                    Expanded(
-                      child: Align(
-                        alignment: isFullScroll
-                            ? Alignment.bottomCenter
-                            : Alignment.topCenter,
-                        child: Container(
-                            width: double.infinity,
-                            child: ButtonElevatedComponent("Verifikasi laporan",
-                                onPressed: () async {
-                              try {
-                                showLoaderDialog();
-                                await fs.updateDataSpecifictDoc(
-                                    "laporan", widget.id, {"type": "keluar"});
-                                navigatePush(const LaporanScreen(),
-                                    isRemove: true);
-                              } catch (e) {
-                                showToast(e);
-                                closeDialog();
-                              }
-                            })),
-                      ),
-                    )
+                    isFullScroll ? V(10) : V(0.02.h),
+                    type == "polisi"
+                        ? Expanded(
+                            child: Align(
+                              alignment: isFullScroll
+                                  ? Alignment.bottomCenter
+                                  : Alignment.topCenter,
+                              child: SizedBox(
+                                  width: double.infinity,
+                                  child: ButtonElevatedComponent(
+                                      "Verifikasi laporan",
+                                      onPressed: () async {
+                                    try {
+                                      showLoaderDialog();
+                                      await fs.updateDataSpecifictDoc("laporan",
+                                          widget.id, {"type": "keluar"});
+                                      navigatePush(const LaporanScreen(),
+                                          isRemove: true);
+                                    } catch (e) {
+                                      showToast(e);
+                                      closeDialog();
+                                    }
+                                  })),
+                            ),
+                          )
+                        : Container()
                   ],
                 ),
               ),

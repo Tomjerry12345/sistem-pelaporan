@@ -14,7 +14,7 @@ class PickMapsComponent extends StatefulWidget {
 }
 
 class _PickMapsComponentState extends State<PickMapsComponent> {
-  MapController _mapController = MapController();
+  final MapController _mapController = MapController();
   LatLng? _selectedPosition;
 
   void _handleTap(TapPosition tapPosition, LatLng latLng) {
@@ -37,7 +37,7 @@ class _PickMapsComponentState extends State<PickMapsComponent> {
           children: [
             TileLayer(
               urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: ['a', 'b', 'c'],
+              subdomains: const ['a', 'b', 'c'],
             ),
             MarkerLayer(
               markers: _selectedPosition != null
@@ -46,12 +46,10 @@ class _PickMapsComponentState extends State<PickMapsComponent> {
                         width: 40.0,
                         height: 40.0,
                         point: _selectedPosition ?? latLngDefault,
-                        builder: (ctx) => Container(
-                          child: Icon(
-                            Icons.location_on,
-                            color: Colors.red,
-                            size: 40.0,
-                          ),
+                        builder: (ctx) => const Icon(
+                          Icons.location_on,
+                          color: Colors.red,
+                          size: 40.0,
                         ),
                       ),
                     ]

@@ -28,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,11 +38,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
               weight: FW.light,
             ),
             V(8),
-            TextComponent("Welcome back!"),
+            const TextComponent("Welcome back!"),
             V(48),
             Column(
               children: [
-                Container(
+                SizedBox(
                     width: 0.8.w,
                     child: Image.asset("assets/images/bg_splash.png")),
                 V(48),

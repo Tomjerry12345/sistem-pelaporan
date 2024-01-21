@@ -22,9 +22,9 @@ class _PolisiScreenState extends State<PolisiScreen> {
           maxLinesTitle: 2,
           rightOnPressed: () {
             SharedPreferencesUtils.reset(key: "nama");
-            navigatePush(LoginScreen(), isRemove: true);
+            navigatePush(const LoginScreen(), isRemove: true);
           },
         ),
-        body: DashboardScreen());
+        body: const DashboardScreen());
   }
 }

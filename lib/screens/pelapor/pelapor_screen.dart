@@ -30,10 +30,9 @@ class _PelaporScreenState extends State<PelaporScreen> {
           {"key": "email", "value": user?.email}
         ]),
         builder: (context, snapshot) {
-          final data = snapshot.data!.docs;
+          final data = snapshot.data?.docs;
 
-          if (data.length > 0) {
-            data.forEach((e) async {
+          data?.forEach((e) async {
               if (e["notifikasi"]) {
                 await fs.updateDataSpecifictDoc("laporan", e.id,
                     {"notifikasi": false, "message_notif": null});
@@ -45,7 +44,6 @@ class _PelaporScreenState extends State<PelaporScreen> {
                     payload: "test");
               }
             });
-          }
 
           return Scaffold(
               appBar: AppBarComponent(
@@ -54,9 +52,9 @@ class _PelaporScreenState extends State<PelaporScreen> {
                   maxLinesTitle: 2,
                   rightOnPressed: () {
                     SharedPreferencesUtils.reset(key: "nama");
-                    navigatePush(LoginScreen(), isRemove: true);
+                    navigatePush(const LoginScreen(), isRemove: true);
                   }),
-              body: DashboardScreen());
+              body: const DashboardScreen());
         });
   }
 }

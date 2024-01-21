@@ -61,6 +61,6 @@ class Logic {
   }
 
   void onLupaPassword() {
-    navigatePush(LupaPasswordScreen());
+    navigatePush(const LupaPasswordScreen());
   }
 }

@@ -20,17 +20,18 @@ void showToast(msg) {
 }
 
 void logO(t, {dynamic m = ""}) {
+  // ignore: avoid_print
   m == "" ? print("[d] $t") : print("[d] $t: $m");
 }
 
 showLoaderDialog() {
   AlertDialog alert = AlertDialog(
-    content: Container(
+    content: SizedBox(
       height: 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          const SizedBox(
             height: 50,
             child: SpinKitWave(
               color: Colors.black,
@@ -38,12 +39,11 @@ showLoaderDialog() {
             ),
           ),
           V(16),
-          Container(
-              child: const TextComponent(
-            "Loading...",
-            size: 18,
-            weight: FW.light,
-          )),
+          const TextComponent(
+                      "Loading...",
+                      size: 18,
+                      weight: FW.light,
+                    ),
         ],
       ),
     ),

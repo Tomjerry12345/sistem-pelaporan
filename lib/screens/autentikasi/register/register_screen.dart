@@ -38,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               size: 24,
             ),
             V(16),
-            TextComponent(
+            const TextComponent(
                 "Silahkan registrasi terlebih dahulu untuk melanjutkan",
                 size: 16,
                 weight: FW.light),
@@ -75,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 120,
                         color: Colors.green[700],
                         child: Transform.translate(
-                          offset: Offset(-3,
+                          offset: const Offset(-3,
                               5), // Sesuaikan offset untuk menyesuaikan posisi gambar
                           child: Image.asset(
                             'assets/images/sample-swafoto-ktp.webp', // Sesuaikan dengan path gambar Anda
@@ -85,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     V(8),
-                    TextComponent(
+                    const TextComponent(
                       "Contoh pengambilan gambar",
                       size: 8,
                     )
@@ -142,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ButtonElevatedComponent(
               "Login",
               onPressed: () {
-                navigatePush(LoginScreen(), isRemove: true);
+                navigatePush(const LoginScreen(), isRemove: true);
               },
               w: 1.0.w,
               bg: Colors.white,

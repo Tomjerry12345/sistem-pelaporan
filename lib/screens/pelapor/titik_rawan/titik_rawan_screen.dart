@@ -134,7 +134,7 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
                                 //     "{z}/{x}/{y}.png?key=$apiKey",
                                 // additionalOptions: const {"apiKey": apiKey}
                                 urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                subdomains: ['a', 'b', 'c']),
+                                subdomains: const ['a', 'b', 'c']),
                             MarkerLayer(
                                 markers: data.map((d) {
                               return Marker(
@@ -142,7 +142,7 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
                                       d["lokasi"]["longitude"]),
                                   width: 35,
                                   height: 35,
-                                  builder: (context) => Icon(
+                                  builder: (context) => const Icon(
                                         Icons.location_pin,
                                         color: Colors.red,
                                         size: 24,
@@ -178,11 +178,11 @@ class _TitikRawanScreenState extends State<TitikRawanScreen> {
                     );
                   }
 
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 })
-            : Center(
+            : const Center(
                 child: CircularProgressIndicator(),
               ));
   }

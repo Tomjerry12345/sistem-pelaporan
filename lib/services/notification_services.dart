@@ -14,10 +14,7 @@ class NotificationServices {
     await _notifications.initialize(initializationSettings,
         onDidReceiveNotificationResponse:
             ((NotificationResponse notificationResponse) {
-      print("details ${notificationResponse}");
     }));
-
-    print("initt notif.....");
   }
 
   static showNotification({
@@ -35,7 +32,7 @@ class NotificationServices {
     String? body,
     String? payload,
   }) async =>
-      _notifications.zonedSchedule(id, title, body, _scheduleDaily(Time(8)),
+      _notifications.zonedSchedule(id, title, body, _scheduleDaily(const Time(8)),
           await _notificationDetails(),
           payload: payload,
           androidAllowWhileIdle: true,
@@ -60,7 +57,7 @@ class NotificationServices {
         time.hour, time.minute, time.second);
 
     return scheduleDate.isBefore(now)
-        ? scheduleDate.add(Duration(days: 1))
+        ? scheduleDate.add(const Duration(days: 1))
         : scheduleDate;
   }
 
