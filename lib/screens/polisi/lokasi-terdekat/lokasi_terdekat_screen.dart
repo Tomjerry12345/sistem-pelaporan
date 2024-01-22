@@ -149,8 +149,6 @@ class _LokasiTerdekatScreenState extends State<LokasiTerdekatScreen> {
         }
       }
 
-      logO("listDatauser", m: listDatauser);
-
       setState(() {
         userData = listDatauser;
       });
